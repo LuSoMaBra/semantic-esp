@@ -1,8 +1,21 @@
 from django.shortcuts import render
 
-# Create your views here.
+from main.defs import *
 
+from main.models import *
 
 def index(request):
-    return render(request, 'index.html')
+
+    # sites = get_sites_to_recover()
+
+    sites = SourceData.objects.all()
+
+    context = {
+        'sites': sites,
+    }
+
+    return render(request, 'index.html', context)
+
+
+
 
