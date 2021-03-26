@@ -23,4 +23,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', RedirectView.as_view(url='/index/')),
     path('index/', views.index),
+    path('populate_child/<str:codigo>', views.populate_child),
 ]
