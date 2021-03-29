@@ -5,3 +5,9 @@ Criar importação de pdf
 
 
 
+sites úteis:
+
+https://365datascience.com/tutorials/python-tutorials/python-requests-package/
+
+
+

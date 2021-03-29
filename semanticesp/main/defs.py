@@ -18,3 +18,4 @@ def get_sites_to_recover():
     sites.append({'titulo': '2ª Fase - Médias de Ingresso no Acesso ao Ensino Superior', 'url': 'https://orientacao-vocacional.com.pt/wp-content/uploads/documentos/media_2020_2.pdf', 'tipo': 'pdf'})
 
     return sites
+

@@ -56,3 +56,36 @@ class ClassNacionaldeareasdeeducacaoeformacao(models.Model):
         managed = False
         db_table = 'class_nacional_de_areas_de_educacao_e_formacao'
         unique_together = ('source_data', 'PartitionKey', 'RowKey')
+
+
+class VolNegEmpresaDados(models.Model):
+    geocod = models.OneToOneField('VolNegEmpresaRegiao', models.CASCADE, db_column='geocod', primary_key=True)
+    dim_3 = models.ForeignKey('VolNegEmpresaCae', models.CASCADE, db_column='dim_3')
+    valor = models.BigIntegerField(blank=True, null=True)
+    ultimo_pref = models.SmallIntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'vol_neg_empresa_dados'
+        unique_together = (('geocod', 'dim_3', 'ultimo_pref'),)
+
+
+class VolNegEmpresaRegiao(models.Model):
+    geocod = models.CharField(primary_key=True, max_length=10)
+    geodsg = models.CharField(max_length=150, blank=True, null=True)
+    total_ultimo_pref = models.BigIntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'vol_neg_empresa_regiao'
+
+
+class VolNegEmpresaCae(models.Model):
+    dim_3 = models.CharField(primary_key=True, max_length=10)
+    dim_3_t = models.CharField(max_length=255, blank=True, null=True)
+    total_ultimo_pref = models.BigIntegerField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'vol_neg_empresa_cae'
+

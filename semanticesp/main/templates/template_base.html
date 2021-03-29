@@ -14,6 +14,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
     <link href="{% static 'bootstrap/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
     <link href="{% static 'assets/css/plugins.css' %}" rel="stylesheet" type="text/css" />
+    <link href="{% static 'assets/css/notiflix/notiflix-2.7.0.min.css' %}" rel="stylesheet" type="text/css">
     <!-- END GLOBAL MANDATORY STYLES -->
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
@@ -22,11 +23,11 @@
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
 
 </head>
-<body class="alt-menu">
+<body class="alt-menu" onload="ctrlLoader()">
     <!-- BEGIN LOADER -->
-    <div id="load_screen"> <div class="loader"> <div class="loader-content">
-        <div class="spinner-grow align-self-center"></div>
-    </div></div></div>
+<!--    <div id="load_screen"> <div class="loader"> <div class="loader-content">-->
+<!--        <div class="spinner-grow align-self-center"></div>-->
+<!--    </div></div></div>-->
     <!--  END LOADER -->
 
     <!--  BEGIN NAVBAR  -->
@@ -56,13 +57,65 @@
     <script src="{% static 'bootstrap/js/popper.min.js' %}"></script>
     <script src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
     <script src="{% static 'plugins/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
+    <script src="{% static 'plugins/font-icons/feather/feather.min.js' %}"></script>
     <script src="{% static 'assets/js/app.js' %}"></script>
-    <script>
+    <script src="{% static 'assets/js/custom.js' %}"></script>
+
+    <script src="{% static 'assets/js/notiflix/notiflix-2.7.0.min.js' %}"></script>
+
+    <script type="text/javascript">
+        feather.replace();
         $(document).ready(function() {
             App.init();
         });
+
+        // veja documentação: https://www.notiflix.com/documentation
+        Notiflix.Loading.Init({
+            svgSize: '80px',
+            //svgColor: '#1548ea',
+        });
+
+        Notiflix.Notify.Init({
+            messageMaxLength: 255,
+            plainText: true,
+            pauseOnHover: true,
+            clickToClose: true,
+            cssAnimationStyle:'zoom',
+            cssAnimationDuration:800,
+            width: '35%',
+            opacity: .95,
+        });
+
+        // liga overlay quando salva
+        $('.set-overlay').on('submit', function() {
+            Notiflix.Loading.Standard('Processando...');
+        });
+
+        // liga overlay quando clica
+        $('.set-overlay').on('click', function() {
+            //console.log('ddddd');
+            Notiflix.Loading.Standard('Processando...');
+        });
+
+        function ctrlLoader() {
+            {% for message in messages %}
+                {% if 'error' in message.tags %}
+                    Notiflix.Notify.Failure('{{ message|escapejs }}', {timeout: 4000});
+                {% elif 'debug' in message.tags %}
+                    Notiflix.Notify.Failure('{{ message|escapejs }}');
+                {% elif 'success' in message.tags %}
+                    Notiflix.Notify.Success('{{ message|escapejs }}', {timeout: 4000});
+                {% elif 'warning' in message.tags %}
+                    Notiflix.Notify.Warning('{{ message|escapejs }}');
+                {% elif 'info' in message.tags %}
+                    Notiflix.Notify.Info('{{ message|escapejs }}');
+                {% else %}  // primary
+                    Notiflix.Notify.Info('{{ message|escapejs }}');
+                {% endif %}
+            {% endfor %}
+            Notiflix.Loading.Remove(200);  // remove o loading
+        };
     </script>
-    <script src="{% static 'assets/js/custom.js' %}"></script>
     <!-- END GLOBAL MANDATORY SCRIPTS -->
 
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
