@@ -1,7 +1,8 @@
 Next steps:
 
-Criar importação de xls
-Criar importação de pdf
+Criar importação de json - ok
+Criar importação de xls - ok
+Criar importação de pdf - em processo
 
 
 
