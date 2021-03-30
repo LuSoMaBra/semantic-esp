@@ -1,3 +1,10 @@
+from pdfminer.pdfinterp import PDFResourceManager, process_pdf
+from pdfminer.converter import TextConverter
+from pdfminer.layout import LAParams
+from io import StringIO
+
+from urllib.request import urlopen
+import PyPDF2
 
 def get_sites_to_recover():
     sites = []
@@ -19,3 +26,25 @@ def get_sites_to_recover():
 
     return sites
 
+def lerPDF(arquivoPDF):
+    # PDFResourceManager Usado para armazenar recursos compartilhados
+    # como fontes e imagens
+    recursos = PDFResourceManager()
+    buffer = StringIO()
+    layoutParams = LAParams()
+    dispositivo = TextConverter(recursos, buffer, laparams=layoutParams)
+    process_pdf(recursos, dispositivo, arquivoPDF)
+    dispositivo.close()
+    conteudo = buffer.getvalue()
+    buffer.close()
+    return conteudo
+
+# esta função recebe o caminho do arquivo pdf e retorna seu texto extraido num string
+def getPDFContent(filename):
+    content = ""
+    file = open(filename, "rb")
+    pdf = PyPDF2.PdfFileReader(file)
+    for i in range(0, pdf.getNumPages()):
+        content += pdf.getPage(i).extractText() + "\n"
+    file.close()
+    return content

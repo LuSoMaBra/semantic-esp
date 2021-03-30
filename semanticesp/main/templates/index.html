@@ -100,7 +100,7 @@
                         <div class="widget-header">
                             <div class="row">
                                 <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                    <h4>Tabela de Sites</h4>
+                                    <h4>Tabela de Source Sites</h4>
                                 </div>
                             </div>
                         </div>
@@ -124,7 +124,7 @@
                                                 <td>{{ x.codigo }}</td>
                                                 <td>{{ x.nome }}</td>
                                                 <td>{{ x.uri }}</td>
-                                                <td class="text-center">{{ x.data_ultimo_acesso|date:'d/M/Y' }}</td>
+                                                <td class="text-center">{{ x.data_ultimo_acesso|date:'d/M/Y H:i' }}</td>
                                                 <td class="text-center">{% if x.populated %}<span class="badge badge-success">Sim{% else %}<span class="badge badge-danger">Não{% endif %}</td>
                                                 {% if x.tipo == 'json' %}
                                                     <td class="text-center"><span class="badge badge-success">{{ x.tipo }}</span></td>
@@ -142,7 +142,8 @@
                                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
                                                         </a>
-                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink1">
+<!--                                                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="customDropdown">-->
+                                                        <div  style="background-color: #bfc9d4" class="dropdown-menu dropdown-menu" aria-labelledby="dropdownMenuLink1">
                                                             <a {% if not x.populated %} disabled {% endif %} class="dropdown-item set-overlay" href="/populate_child/{{ x.codigo }}">Populate</a>
                                                             <a class="dropdown-item set-overlay" href="javascript:void(0);">View</a>
                                                         </div>
