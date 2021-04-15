@@ -10,5 +10,5 @@ sites úteis:
 
 https://365datascience.com/tutorials/python-tutorials/python-requests-package/
 
-
+https://www.a3es.pt/pt/documentos/publicacoes/a3es-ciclos-de-estudos-tematicos
 
