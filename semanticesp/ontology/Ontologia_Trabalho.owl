@@ -1,136 +1,87 @@
-<?xml version="1.0"?>
-<rdf:RDF xmlns="http://www.w3.org/2002/07/owl#"
-     xml:base="http://www.w3.org/2002/07/owl"
-     xmlns:owl="http://www.w3.org/2002/07/owl#"
-     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-     xmlns:xml="http://www.w3.org/XML/1998/namespace"
-     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
-     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
-    <Ontology/>
-    
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.w3.org/2002/07/owl#> .
+
+[ rdf:type owl:Ontology
+ ] .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.co-ode.org/ontologies/ont.owl#isPartOff
+<http://www.co-ode.org/ontologies/ont.owl#isPartOff> rdf:type owl:ObjectProperty ;
+                                                     rdfs:domain <http://www.co-ode.org/ontologies/ont.owl#DescricaoTrabalho> ,
+                                                                 <http://www.co-ode.org/ontologies/ont.owl#LocalizacaoTrabalho> ,
+                                                                 <http://www.co-ode.org/ontologies/ont.owl#ModoTrabalho> ,
+                                                                 <http://www.co-ode.org/ontologies/ont.owl#RemuneracaoTrabalho> ,
+                                                                 <http://www.co-ode.org/ontologies/ont.owl#RequisitosTrabalho> ,
+                                                                 <http://www.co-ode.org/ontologies/ont.owl#TituloTrabalho> ;
+                                                     rdfs:range <http://www.co-ode.org/ontologies/ont.owl#PerfilTrabalho> ;
+                                                     rdfs:label "é parte de"@pt .
 
 
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Object Properties
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
+#################################################################
+#    Classes
+#################################################################
 
-    
-
-
-    <!-- http://www.co-ode.org/ontologies/ont.owl#isPartOff -->
-
-    <ObjectProperty rdf:about="http://www.co-ode.org/ontologies/ont.owl#isPartOff">
-        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/ont.owl#DescricaoTrabalho"/>
-        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/ont.owl#LocalizacaoTrabalho"/>
-        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/ont.owl#ModoTrabalho"/>
-        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/ont.owl#RemuneracaoTrabalho"/>
-        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/ont.owl#RequisitosTrabalho"/>
-        <rdfs:domain rdf:resource="http://www.co-ode.org/ontologies/ont.owl#TituloTrabalho"/>
-        <rdfs:range rdf:resource="http://www.co-ode.org/ontologies/ont.owl#PerfilTrabalho"/>
-        <rdfs:label xml:lang="pt">é parte de</rdfs:label>
-    </ObjectProperty>
-    
+###  http://www.co-ode.org/ontologies/ont.owl#DescricaoTrabalho
+<http://www.co-ode.org/ontologies/ont.owl#DescricaoTrabalho> rdf:type owl:Class ;
+                                                             rdfs:subClassOf <http://www.co-ode.org/ontologies/ont.owl#PerfilTrabalho> ;
+                                                             rdfs:label "Descrição do Trabalho"@pt .
 
 
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // Classes
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
-
-    
+###  http://www.co-ode.org/ontologies/ont.owl#LocalizacaoTrabalho
+<http://www.co-ode.org/ontologies/ont.owl#LocalizacaoTrabalho> rdf:type owl:Class ;
+                                                               rdfs:subClassOf <http://www.co-ode.org/ontologies/ont.owl#PerfilTrabalho> ;
+                                                               rdfs:label "Localização do Trabalho"@pt .
 
 
-    <!-- http://www.co-ode.org/ontologies/ont.owl#DescricaoTrabalho -->
-
-    <Class rdf:about="http://www.co-ode.org/ontologies/ont.owl#DescricaoTrabalho">
-        <rdfs:subClassOf rdf:resource="http://www.co-ode.org/ontologies/ont.owl#PerfilTrabalho"/>
-        <rdfs:label xml:lang="pt">Descrição do Trabalho</rdfs:label>
-    </Class>
-    
+###  http://www.co-ode.org/ontologies/ont.owl#ModoTrabalho
+<http://www.co-ode.org/ontologies/ont.owl#ModoTrabalho> rdf:type owl:Class ;
+                                                        rdfs:subClassOf <http://www.co-ode.org/ontologies/ont.owl#PerfilTrabalho> ;
+                                                        rdfs:label "Modo do Trabalho (Presencial ou Remoto)"@pt .
 
 
-    <!-- http://www.co-ode.org/ontologies/ont.owl#LocalizacaoTrabalho -->
-
-    <Class rdf:about="http://www.co-ode.org/ontologies/ont.owl#LocalizacaoTrabalho">
-        <rdfs:subClassOf rdf:resource="http://www.co-ode.org/ontologies/ont.owl#PerfilTrabalho"/>
-        <rdfs:label xml:lang="pt">Localização do Trabalho</rdfs:label>
-    </Class>
-    
+###  http://www.co-ode.org/ontologies/ont.owl#PerfilTrabalho
+<http://www.co-ode.org/ontologies/ont.owl#PerfilTrabalho> rdf:type owl:Class ;
+                                                          rdfs:label "Perfil do Trabalho"@pt .
 
 
-    <!-- http://www.co-ode.org/ontologies/ont.owl#ModoTrabalho -->
-
-    <Class rdf:about="http://www.co-ode.org/ontologies/ont.owl#ModoTrabalho">
-        <rdfs:subClassOf rdf:resource="http://www.co-ode.org/ontologies/ont.owl#PerfilTrabalho"/>
-        <rdfs:label xml:lang="pt">Modo do Trabalho (Presencial ou Remoto)</rdfs:label>
-    </Class>
-    
+###  http://www.co-ode.org/ontologies/ont.owl#RemuneracaoTrabalho
+<http://www.co-ode.org/ontologies/ont.owl#RemuneracaoTrabalho> rdf:type owl:Class ;
+                                                               rdfs:subClassOf <http://www.co-ode.org/ontologies/ont.owl#PerfilTrabalho> ;
+                                                               rdfs:label "Remuneração do Trabalho"@pt .
 
 
-    <!-- http://www.co-ode.org/ontologies/ont.owl#PerfilTrabalho -->
-
-    <Class rdf:about="http://www.co-ode.org/ontologies/ont.owl#PerfilTrabalho">
-        <rdfs:label xml:lang="pt">Perfil do Trabalho</rdfs:label>
-    </Class>
-    
+###  http://www.co-ode.org/ontologies/ont.owl#RequisitosTrabalho
+<http://www.co-ode.org/ontologies/ont.owl#RequisitosTrabalho> rdf:type owl:Class ;
+                                                              rdfs:subClassOf <http://www.co-ode.org/ontologies/ont.owl#PerfilTrabalho> ;
+                                                              rdfs:label "Requisitos Educacionais para o Trabalho"@pt .
 
 
-    <!-- http://www.co-ode.org/ontologies/ont.owl#RemuneracaoTrabalho -->
-
-    <Class rdf:about="http://www.co-ode.org/ontologies/ont.owl#RemuneracaoTrabalho">
-        <rdfs:subClassOf rdf:resource="http://www.co-ode.org/ontologies/ont.owl#PerfilTrabalho"/>
-        <rdfs:label xml:lang="pt">Remuneração do Trabalho</rdfs:label>
-    </Class>
-    
+###  http://www.co-ode.org/ontologies/ont.owl#TituloTrabalho
+<http://www.co-ode.org/ontologies/ont.owl#TituloTrabalho> rdf:type owl:Class ;
+                                                          rdfs:subClassOf <http://www.co-ode.org/ontologies/ont.owl#PerfilTrabalho> ;
+                                                          rdfs:label "Título do Trabalho"@pt .
 
 
-    <!-- http://www.co-ode.org/ontologies/ont.owl#RequisitosTrabalho -->
+#################################################################
+#    General axioms
+#################################################################
 
-    <Class rdf:about="http://www.co-ode.org/ontologies/ont.owl#RequisitosTrabalho">
-        <rdfs:subClassOf rdf:resource="http://www.co-ode.org/ontologies/ont.owl#PerfilTrabalho"/>
-        <rdfs:label xml:lang="pt">Requisitos Educacionais para o Trabalho</rdfs:label>
-    </Class>
-    
-
-
-    <!-- http://www.co-ode.org/ontologies/ont.owl#TituloTrabalho -->
-
-    <Class rdf:about="http://www.co-ode.org/ontologies/ont.owl#TituloTrabalho">
-        <rdfs:subClassOf rdf:resource="http://www.co-ode.org/ontologies/ont.owl#PerfilTrabalho"/>
-        <rdfs:label xml:lang="pt">Título do Trabalho</rdfs:label>
-    </Class>
-    
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( <http://www.co-ode.org/ontologies/ont.owl#DescricaoTrabalho>
+                <http://www.co-ode.org/ontologies/ont.owl#LocalizacaoTrabalho>
+                <http://www.co-ode.org/ontologies/ont.owl#ModoTrabalho>
+                <http://www.co-ode.org/ontologies/ont.owl#RemuneracaoTrabalho>
+                <http://www.co-ode.org/ontologies/ont.owl#RequisitosTrabalho>
+                <http://www.co-ode.org/ontologies/ont.owl#TituloTrabalho>
+              )
+] .
 
 
-    <!-- 
-    ///////////////////////////////////////////////////////////////////////////////////////
-    //
-    // General axioms
-    //
-    ///////////////////////////////////////////////////////////////////////////////////////
-     -->
-
-    <rdf:Description>
-        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
-        <members rdf:parseType="Collection">
-            <rdf:Description rdf:about="http://www.co-ode.org/ontologies/ont.owl#DescricaoTrabalho"/>
-            <rdf:Description rdf:about="http://www.co-ode.org/ontologies/ont.owl#LocalizacaoTrabalho"/>
-            <rdf:Description rdf:about="http://www.co-ode.org/ontologies/ont.owl#ModoTrabalho"/>
-            <rdf:Description rdf:about="http://www.co-ode.org/ontologies/ont.owl#RemuneracaoTrabalho"/>
-            <rdf:Description rdf:about="http://www.co-ode.org/ontologies/ont.owl#RequisitosTrabalho"/>
-            <rdf:Description rdf:about="http://www.co-ode.org/ontologies/ont.owl#TituloTrabalho"/>
-        </members>
-    </rdf:Description>
-</rdf:RDF>
-
-
-
-<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
-
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
