@@ -1,0 +1,112 @@
+[ {
+  "@id" : "_:genid1",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Ontology" ]
+}, {
+  "@id" : "_:genid2",
+  "@type" : [ "http://www.w3.org/2002/07/owl#AllDisjointClasses" ],
+  "http://www.w3.org/2002/07/owl#members" : [ {
+    "@list" : [ {
+      "@id" : "http://www.co-ode.org/ontologies/ont.owl#DescricaoTrabalho"
+    }, {
+      "@id" : "http://www.co-ode.org/ontologies/ont.owl#LocalizacaoTrabalho"
+    }, {
+      "@id" : "http://www.co-ode.org/ontologies/ont.owl#ModoTrabalho"
+    }, {
+      "@id" : "http://www.co-ode.org/ontologies/ont.owl#RemuneracaoTrabalho"
+    }, {
+      "@id" : "http://www.co-ode.org/ontologies/ont.owl#RequisitosTrabalho"
+    }, {
+      "@id" : "http://www.co-ode.org/ontologies/ont.owl#TituloTrabalho"
+    } ]
+  } ]
+}, {
+  "@id" : "http://www.co-ode.org/ontologies/ont.owl#DescricaoTrabalho",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "pt",
+    "@value" : "Descrição do Trabalho"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "http://www.co-ode.org/ontologies/ont.owl#PerfilTrabalho"
+  } ]
+}, {
+  "@id" : "http://www.co-ode.org/ontologies/ont.owl#LocalizacaoTrabalho",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "pt",
+    "@value" : "Localização do Trabalho"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "http://www.co-ode.org/ontologies/ont.owl#PerfilTrabalho"
+  } ]
+}, {
+  "@id" : "http://www.co-ode.org/ontologies/ont.owl#ModoTrabalho",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "pt",
+    "@value" : "Modo do Trabalho (Presencial ou Remoto)"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "http://www.co-ode.org/ontologies/ont.owl#PerfilTrabalho"
+  } ]
+}, {
+  "@id" : "http://www.co-ode.org/ontologies/ont.owl#PerfilTrabalho",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "pt",
+    "@value" : "Perfil do Trabalho"
+  } ]
+}, {
+  "@id" : "http://www.co-ode.org/ontologies/ont.owl#RemuneracaoTrabalho",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "pt",
+    "@value" : "Remuneração do Trabalho"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "http://www.co-ode.org/ontologies/ont.owl#PerfilTrabalho"
+  } ]
+}, {
+  "@id" : "http://www.co-ode.org/ontologies/ont.owl#RequisitosTrabalho",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "pt",
+    "@value" : "Requisitos Educacionais para o Trabalho"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "http://www.co-ode.org/ontologies/ont.owl#PerfilTrabalho"
+  } ]
+}, {
+  "@id" : "http://www.co-ode.org/ontologies/ont.owl#TituloTrabalho",
+  "@type" : [ "http://www.w3.org/2002/07/owl#Class" ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "pt",
+    "@value" : "Título do Trabalho"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#subClassOf" : [ {
+    "@id" : "http://www.co-ode.org/ontologies/ont.owl#PerfilTrabalho"
+  } ]
+}, {
+  "@id" : "http://www.co-ode.org/ontologies/ont.owl#isPartOff",
+  "@type" : [ "http://www.w3.org/2002/07/owl#ObjectProperty" ],
+  "http://www.w3.org/2000/01/rdf-schema#domain" : [ {
+    "@id" : "http://www.co-ode.org/ontologies/ont.owl#DescricaoTrabalho"
+  }, {
+    "@id" : "http://www.co-ode.org/ontologies/ont.owl#LocalizacaoTrabalho"
+  }, {
+    "@id" : "http://www.co-ode.org/ontologies/ont.owl#ModoTrabalho"
+  }, {
+    "@id" : "http://www.co-ode.org/ontologies/ont.owl#RemuneracaoTrabalho"
+  }, {
+    "@id" : "http://www.co-ode.org/ontologies/ont.owl#RequisitosTrabalho"
+  }, {
+    "@id" : "http://www.co-ode.org/ontologies/ont.owl#TituloTrabalho"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#label" : [ {
+    "@language" : "pt",
+    "@value" : "é parte de"
+  } ],
+  "http://www.w3.org/2000/01/rdf-schema#range" : [ {
+    "@id" : "http://www.co-ode.org/ontologies/ont.owl#PerfilTrabalho"
+  } ]
+} ]
