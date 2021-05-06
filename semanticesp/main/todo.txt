@@ -17,3 +17,5 @@ https://vocab.org/aiiso
 https://github.com/RDFLib/rdflib
 
 https://dev.to/seriousfun01/python-tools-for-the-semantic-web-2e1g
+
+http://visualdataweb.de/webvowl
