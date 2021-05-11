@@ -17,6 +17,7 @@ class UTADSpider(scrapy.Spider):
                 'nome': curso.css(NOME_SELECTOR).extract_first().replace('\n', '').replace('\t', ''),
                 'link': curso.css(LINK_SELECTOR).extract_first(),
             }
+            curso_parsed = parse_curso(self, response)  PAREI AQUI
             # print(curso.css(NOME_SELECTOR).extract_first().replace('\n', '').replace('\t', ''))
 
         NEXT_PAGE_SELECTOR = '.pe-pagination a ::attr(href)'
@@ -28,3 +29,8 @@ class UTADSpider(scrapy.Spider):
             )
 
         self.logger.info('A response from %s just arrived!', response.url)
+
+
+    def parse_curso(self, response):
+
+        self.urls.append(response.url)
