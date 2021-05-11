@@ -19,3 +19,9 @@ https://github.com/RDFLib/rdflib
 https://dev.to/seriousfun01/python-tools-for-the-semantic-web-2e1g
 
 http://visualdataweb.de/webvowl
+
+https://www.digitalocean.com/community/tutorials/como-fazer-crawling-em-uma-pagina-web-com-scrapy-e-python-3-pt
+
+https://medium.com/analytics-vidhya/web-scraping-with-scrapy-and-django-94a77386ac1b
+
+https://medium.com/@tiago.piovesan.tp/crawler-do-inicio-ao-fim-django-scrapy-234dc2934585
