@@ -1,6 +1,8 @@
 import datetime
 import scrapy
-#
+from db_tools import *
+
+
 # class AuthorSpider(scrapy.Spider):
 #     name = 'author'
 #
@@ -26,10 +28,16 @@ import scrapy
 #
 #         print('========================================AUTHOR=========================================================')
 
+
 class UTADSpider(scrapy.Spider):
     name = "UTAD_spider"
     start_urls = ['https://www.utad.pt/estudar/inicio/licenciaturas-mestrados-integrados/', 'https://www.utad.pt/estudar/inicio/licenciaturas-mestrados-integrados/page/2/']
     # urls = []
+    result_scrappy = []
+    localizacao_instituicao = 'Quinta de Prados Vila Real'
+    nome_instituicao = 'Universidade Trás-os-Montes e Alto Douro'
+    requisitos_entrada = 'Provas de ingresso: 95 (escala de 0-200) / Nota de candidatura: 95 (escala de 0-200)'
+    id_curso =
 
     def parse(self, response):
 
@@ -41,6 +49,8 @@ class UTADSpider(scrapy.Spider):
             #     'link': curso.css('li a ::attr(href)').extract_first(),
             # }
         links_cursos = response.css('.linklist ::attr(href)')
+
+        selectDB(None, 'select * from source_data')
 
         # for x in links_cursos:
         #     print(x)
@@ -87,8 +97,6 @@ class UTADSpider(scrapy.Spider):
         # localizacao
         # requisitos_entrada
 
-        # print(dados_curso[1].css('div .col-xs-12').extract_first().replace('<br>', '').replace('</div>', '').replace('<div class="col-xs-12 col-md-8">', ''))
-
         print('url', url)
         print('nome', nome)
         print('qualificacao', qualificacao)
@@ -107,6 +115,7 @@ class UTADSpider(scrapy.Spider):
         # modo = extract_with_css('.author-description::text')
         data_raspagem = datetime.datetime.now()
 
+        result_scrappy.append([url, nome, qualificacao, descricao, area, campo_estudo, duracao, modo])
 
 
         # yield {

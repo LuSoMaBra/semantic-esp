@@ -38,6 +38,12 @@ class InstituicoesdoEnsinoSuperior(models.Model):
         unique_together = ('source_data', 'PartitionKey', 'RowKey')
 
 
+
+
+
+
+
+
 class ClassNacionaldeareasdeeducacaoeformacao(models.Model):
     source_data = models.CharField(max_length=255, blank=True, null=True)
     PartitionKey = models.CharField(max_length=255, blank=True, null=True)
@@ -89,3 +95,44 @@ class VolNegEmpresaCae(models.Model):
         managed = False
         db_table = 'vol_neg_empresa_cae'
 
+
+class Instituicao(models.Model):
+    nome = models.CharField(max_length=255, blank=True, null=True)
+    localizacao = models.CharField(max_length=255, blank=True, null=True)
+    requisitos_entrada = models.CharField(max_length=255, blank=False, null=False)
+
+    class Meta:
+        managed = False
+        db_table = 'instituicao'
+
+class PerfilTrabalho(models.Model):
+    titulo = models.CharField(max_length=250, blank=True, null=True)
+    descricao = models.CharField(max_length=255, blank=True, null=True)
+    requisitos = models.CharField(max_length=255, blank=False, null=False)
+    remuneracao = models.CharField(max_length=255, blank=False, null=False)
+    localizacao = models.CharField(max_length=255, blank=False, null=False)
+    modo = models.CharField(max_length=255, blank=False, null=False)
+    data_raspagem = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'perfil_trabalho'
+
+
+class PerfilCurso(models.Model):
+    instituicao = models.ForeignKey(Instituicao, models.CASCADE, blank=True, null=True)
+    nome = models.CharField(max_length=250, blank=True, null=True)
+    qualificacao = models.CharField(max_length=255, blank=False, null=False)
+    url = models.CharField(max_length=255, blank=False, null=False)
+    descricao = models.CharField(max_length=255, blank=True, null=True)
+    campo_estudo = models.CharField(max_length=255, blank=False, null=False)
+    area = models.CharField(max_length=255, blank=False, null=False)
+    valor_anual_nacional = models.CharField(max_length=255, blank=False, null=False)
+    valor_anual_internacional = models.CharField(max_length=255, blank=False, null=False)
+    duracao = models.CharField(max_length=255, blank=False, null=False)
+    modo = models.CharField(max_length=255, blank=False, null=False)
+    data_raspagem = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        db_table = 'perfil_curso'
