@@ -107,7 +107,7 @@ class Instituicao(models.Model):
 
 class PerfilTrabalho(models.Model):
     titulo = models.CharField(max_length=250, blank=True, null=True)
-    descricao = models.CharField(max_length=255, blank=True, null=True)
+    descricao = models.CharField(max_length=2048, blank=True, null=True)
     requisitos = models.CharField(max_length=255, blank=False, null=False)
     remuneracao = models.CharField(max_length=255, blank=False, null=False)
     localizacao = models.CharField(max_length=255, blank=False, null=False)
@@ -124,7 +124,7 @@ class PerfilCurso(models.Model):
     nome = models.CharField(max_length=250, blank=True, null=True)
     qualificacao = models.CharField(max_length=255, blank=False, null=False)
     url = models.CharField(max_length=255, blank=False, null=False)
-    descricao = models.CharField(max_length=255, blank=True, null=True)
+    descricao = models.CharField(max_length=2048, blank=True, null=True)
     campo_estudo = models.CharField(max_length=255, blank=False, null=False)
     area = models.CharField(max_length=255, blank=False, null=False)
     valor_anual_nacional = models.CharField(max_length=255, blank=False, null=False)

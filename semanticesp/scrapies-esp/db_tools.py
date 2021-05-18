@@ -58,9 +58,22 @@ def selectDB(connection, string_sql):
             cursor.close()
 
 
-def insertDB(connection, string_sql):
-    if not connection:
-        connection = connectDB()
+def insertDB(connection, tabela, fields, values):
+
+    fields_sql = " ("
+    for x in fields:
+        fields_sql = fields_sql + str(x) + ", "
+    fields_sql = fields_sql[:-2] + ") "
+
+    values_sql = " values ("
+    for x in values:
+        values_sql = values_sql + "'" + str(x) + "', "
+    values_sql = values_sql[:-2] + ") "
+
+    string_sql = "insert into " + tabela + fields_sql + values_sql
+
+    print(string_sql)
+
     try:
         cursor = connection.cursor()
         cursor.execute(string_sql)
