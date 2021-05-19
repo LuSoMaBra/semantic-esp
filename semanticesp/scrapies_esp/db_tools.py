@@ -1,7 +1,7 @@
 import psycopg2
 from configparser import ConfigParser
 
-def read_config(filename='scrapies-esp/settings.ini', section='server_postgresql'):
+def read_config(filename='scrapies_esp/settings.ini', section='server_postgresql'):
     # create a parser
     parser = ConfigParser()
     # read config file
@@ -44,18 +44,20 @@ def testDB():
 
 
 def selectDB(connection, string_sql):
-    if not connection:
-        connection = connectDB()
+    context = []
     try:
         cursor = connection.cursor()
         cursor.execute(string_sql)
+        for record in cursor:
+            context.append(record)
         count = cursor.rowcount
         print("Result ", cursor.fetchall())
     except (Exception, psycopg2.Error) as error:
-        print("Error while inserting record", error)
+        print("Error on select", error)
     finally:
         if cursor:
             cursor.close()
+    return context
 
 
 def insertDB(connection, tabela, fields, values):

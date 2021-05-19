@@ -2,9 +2,24 @@ import datetime
 import scrapy
 from db_tools import *
 
+
+def create_start_urls():
+    # este link está configurado para buscar ofertas de trabalho full time adicionadas nos últimos 7 dias (padrão indeed.com)
+    link_base = 'https://pt.indeed.com/ofertas?q={}&l=Portugal&jt=fulltime&fromage=7'
+
+    areas = selectDB(connectDB(), 'select area from perfil_curso')
+
+    start_urls = []
+    for x in areas:
+        area = x[0].replace(' ', '+')
+        start_urls.append(link_base.format(area))
+    return start_urls
+
+
 class INDEEDSpider(scrapy.Spider):
     name = "INDEED_spider"
-    start_urls = ['']
+
+    start_urls = create_start_urls()
 
     data_raspagem = datetime.datetime.now()
 
@@ -20,7 +35,7 @@ class INDEEDSpider(scrapy.Spider):
 
     def parse(self, response):
 
-        links_jobs = response.css('.linklist ::attr(href)')
+        links_jobs = response.css('.title ::attr(href)')
 
         print(links_jobs)
 
