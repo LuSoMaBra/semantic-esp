@@ -2,6 +2,26 @@ import datetime
 import scrapy
 from db_tools import *
 from urllib.parse import unquote
+import json
+from io import StringIO
+from html.parser import HTMLParser
+
+class MLStripper(HTMLParser):
+    def __init__(self):
+        super().__init__()
+        self.reset()
+        self.strict = False
+        self.convert_charrefs= True
+        self.text = StringIO()
+    def handle_data(self, d):
+        self.text.write(d)
+    def get_data(self):
+        return self.text.getvalue()
+
+def strip_tags(html):
+    s = MLStripper()
+    s.feed(html)
+    return s.get_data()
 
 def cleanup(url):
     try:
@@ -12,7 +32,8 @@ def cleanup(url):
 def create_start_urls():
     # este link está configurado para buscar ofertas de trabalho full time adicionadas nos últimos 7 dias (padrão portalemprego.com)
     # link_base = 'https://pt.indeed.com/ofertas?q={}&l=Portugal&jt=fulltime&fromage=7'
-    link_base = 'https://www.portalemprego.pt/anuncios/contrato-full-time/com-curso-superior/pesquisa-{}/mostrar-50/'
+
+    link_base = 'https://www.net-empregos.com/pesquisa-empregos.asp?chaves={}&cidade=&categoria=0&zona=0&tipo=1'
 
     areas = selectDB(connectDB(), 'select area from perfil_curso')
 
@@ -23,8 +44,8 @@ def create_start_urls():
     return start_urls
 
 
-class EMPREGOSpider(scrapy.Spider):
-    name = "EMPREGO_spider"
+class NETEMPREGOSpider(scrapy.Spider):
+    name = "NETEMPREGO_spider"
 
     start_urls = create_start_urls()
     # start_urls = ['https://www.net-empregos.com/pesquisa-empregos.asp?chaves=&cidade=&categoria=9&zona=0&tipo=1']
@@ -44,7 +65,7 @@ class EMPREGOSpider(scrapy.Spider):
 
     def parse(self, response):
 
-        links_jobs = response.css('.jobs ::attr(href)')
+        links_jobs = response.css('.div-right a ::attr(href)')
 
         # print('+++++++++++++++++++++', links_jobs)
 
@@ -69,6 +90,26 @@ class EMPREGOSpider(scrapy.Spider):
 
         def extract_list_with_css(response, query):
             return response.css(query)
+
+        link = extract_list_with_css(response, 'script')
+        for x in link:
+            __x = extract_with_css(x, '::text')
+            if '@context' in __x:
+                dados_dict = (__x)
+                break
+
+        try:
+            print('9999999999999999999999999999', dados_dict)
+        except:
+            pass
+        try:
+            print('JSONJSONJSONJSONJSONJSONJSON', json.loads(dados_dict))
+        except Exception as error:
+            print('ERRORERRORERRORERROR', error)
+            pass
+
+        return
+
 
         # titulo = extract_with_css('script ::text')
 
