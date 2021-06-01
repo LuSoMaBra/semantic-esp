@@ -1,0 +1,230 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#"
+     xml:base="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#AreaCurso -->
+
+    <owl:Class rdf:about="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#AreaCurso">
+        <rdfs:subClassOf rdf:resource="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#Curso"/>
+        <rdfs:label xml:lang="pt">Área do Curso</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#CampoEstudoCurso -->
+
+    <owl:Class rdf:about="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#CampoEstudoCurso">
+        <rdfs:subClassOf rdf:resource="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#Curso"/>
+        <rdfs:label xml:lang="pt">Campo de Estudo do Curso</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#Curso -->
+
+    <owl:Class rdf:about="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#Curso">
+        <rdfs:subClassOf rdf:resource="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#PerfilCurso"/>
+        <owl:disjointWith rdf:resource="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#Instituicao"/>
+        <rdfs:label xml:lang="pt">Curso Superior</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#DescricaoCurso -->
+
+    <owl:Class rdf:about="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#DescricaoCurso">
+        <rdfs:subClassOf rdf:resource="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#Curso"/>
+        <rdfs:label xml:lang="pt">Descrição do Curso</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#DuracaoCurso -->
+
+    <owl:Class rdf:about="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#DuracaoCurso">
+        <rdfs:subClassOf rdf:resource="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#Curso"/>
+        <rdfs:label xml:lang="pt">Duração do Curso (anos)</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#Instituicao -->
+
+    <owl:Class rdf:about="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#Instituicao">
+        <rdfs:subClassOf rdf:resource="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#PerfilCurso"/>
+        <rdfs:label xml:lang="pt">Instituição de Ensino</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#LocalizacaoInstituicao -->
+
+    <owl:Class rdf:about="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#LocalizacaoInstituicao">
+        <rdfs:subClassOf rdf:resource="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#Instituicao"/>
+        <rdfs:label xml:lang="pt">Localização da Instituição</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#ModoCurso -->
+
+    <owl:Class rdf:about="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#ModoCurso">
+        <rdfs:subClassOf rdf:resource="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#Curso"/>
+        <rdfs:label xml:lang="pt">Modo Curso (Presencial/Remoto)</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#NomeCurso -->
+
+    <owl:Class rdf:about="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#NomeCurso">
+        <rdfs:subClassOf rdf:resource="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#Curso"/>
+        <rdfs:label xml:lang="pt">Nome do Curso</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#NomeInstituicao -->
+
+    <owl:Class rdf:about="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#NomeInstituicao">
+        <rdfs:subClassOf rdf:resource="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#Instituicao"/>
+        <rdfs:label xml:lang="pt">Nome da Universidade / Instituto</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#PerfilCurso -->
+
+    <owl:Class rdf:about="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#PerfilCurso"/>
+    
+
+
+    <!-- https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#QualificacaoCurso -->
+
+    <owl:Class rdf:about="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#QualificacaoCurso">
+        <rdfs:subClassOf rdf:resource="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#Curso"/>
+        <rdfs:label xml:lang="pt">Qualificação do Curso</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#RequisitosEntradaInstituicao -->
+
+    <owl:Class rdf:about="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#RequisitosEntradaInstituicao">
+        <rdfs:subClassOf rdf:resource="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#Instituicao"/>
+        <rdfs:label xml:lang="pt">Requisitos de Entrada na Instituição</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#UrlCurso -->
+
+    <owl:Class rdf:about="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#UrlCurso">
+        <rdfs:subClassOf rdf:resource="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#Curso"/>
+        <rdfs:label xml:lang="pt">URL do Curso</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#ValorAnual -->
+
+    <owl:Class rdf:about="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#ValorAnual">
+        <rdfs:subClassOf rdf:resource="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#Curso"/>
+        <rdfs:label xml:lang="pt">Valores de Propina (Anual)</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#ValorInternacionalCurso -->
+
+    <owl:Class rdf:about="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#ValorInternacionalCurso">
+        <rdfs:subClassOf rdf:resource="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#ValorAnual"/>
+        <owl:disjointWith rdf:resource="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#ValorNacionalCurso"/>
+        <rdfs:label xml:lang="pt">Valor da Propina para Alunos Internacionais</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#ValorNacionalCurso -->
+
+    <owl:Class rdf:about="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#ValorNacionalCurso">
+        <rdfs:subClassOf rdf:resource="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#ValorAnual"/>
+        <rdfs:label xml:lang="pt">Valor da Propina para Alunos Nacionais</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#Turismo -->
+
+    <owl:NamedIndividual rdf:about="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#Turismo">
+        <rdf:type rdf:resource="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#Curso"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#AreaCurso"/>
+            <rdf:Description rdf:about="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#CampoEstudoCurso"/>
+            <rdf:Description rdf:about="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#DescricaoCurso"/>
+            <rdf:Description rdf:about="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#DuracaoCurso"/>
+            <rdf:Description rdf:about="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#ModoCurso"/>
+            <rdf:Description rdf:about="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#NomeCurso"/>
+            <rdf:Description rdf:about="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#QualificacaoCurso"/>
+            <rdf:Description rdf:about="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#UrlCurso"/>
+            <rdf:Description rdf:about="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#ValorAnual"/>
+        </owl:members>
+    </rdf:Description>
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#LocalizacaoInstituicao"/>
+            <rdf:Description rdf:about="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#NomeInstituicao"/>
+            <rdf:Description rdf:about="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#RequisitosEntradaInstituicao"/>
+        </owl:members>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+

@@ -8,6 +8,9 @@ from pytz import timezone, utc
 from openpyxl import load_workbook   # for xls? formats
 import xlrd  # for xls formats
 from django.contrib import messages
+import rdflib
+from rdflib import Namespace, URIRef, Literal
+from rdflib.namespace import RDF, RDFS, OWL, FOAF
 
 from urllib.request import urlopen
 
@@ -18,6 +21,41 @@ def index(request):
     }
 
     return render(request, 'index.html', context)
+
+
+
+def processa_ontologia(request):
+
+    g = rdflib.Graph()
+    ontologia = g.parse('ontology/onto_curso_.rdf')
+
+    myOntology = Namespace('https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology')
+
+    g.bind('myOntology', myOntology)
+
+    on = list(g.triples((None, RDF.type, myOntology.Turismo)))
+    for (sub, pred, obj) in on:
+        print('PPPPPPP', sub, pred, obj)
+
+
+    # perfil_curso = URIRef(myOntology["PerfilCurso"])
+    #
+    # g.add((perfil_curso, RDF.type, OWL.Class))
+    # g.add((perfil_curso, RDFS.subClassOf, OWL.Thing))
+    # g.add((perfil_curso, RDFS.label, OWL.Thing))
+
+    # for (sub, pred, obj) in ontologia:
+    #     print('PPPPPPP', sub, pred, obj)
+
+    # print(ontologia['ValorInternacionalCurso'])
+    # nome_curso = URIRef(ontologia['NomeCurso'])
+    # g.add((nome_curso, rdf.about, Literal['Turismo']))
+
+    s = g.serialize(format='turtle').decode('utf-8')
+    print(s)
+
+    return redirect('/index')
+
 
 
 def populate_child(request, codigo):

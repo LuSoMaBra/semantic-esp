@@ -14,6 +14,7 @@ def create_start_urls():
     # link_base = 'https://pt.indeed.com/ofertas?q={}&l=Portugal&jt=fulltime&fromage=7'
     link_base = 'https://www.portalemprego.pt/anuncios/contrato-full-time/com-curso-superior/pesquisa-{}/mostrar-50/'
 
+
     areas = selectDB(connectDB(), 'select area from perfil_curso')
 
     start_urls = []
