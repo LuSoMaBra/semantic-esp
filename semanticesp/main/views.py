@@ -22,36 +22,104 @@ def index(request):
 
     return render(request, 'index.html', context)
 
+def raspagem_curso(request):
+
+    os.system('scrapy runspider scrapies_esp/scrapy_curso.py')
+
+    return redirect('/index')
+
+def raspagem_job(request):
+
+    os.system('scrapy runspider scrapies_esp/scrapy_job_net_empregos.py')
+
+    return redirect('/index')
+
 
 
 def processa_ontologia(request):
 
+    myOntology = Namespace('https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#')
+
+    equivalencia_curso = {'NomeCurso': 'nome',
+                          'RequisitosEntradaInstituicao': 'instituicao__requisitos_entrada',
+                          'QualificacaoCurso': 'qualificacao',
+                          'ValorInternacionalCurso': 'valor_anual_internacional',
+                          'NomeInstituicao': 'instituicao__nome',
+                          'DescricaoCurso':'descricao',
+                          'AreaCurso': 'area',
+                          'ModoCurso': 'modo',
+                          'UrlCurso': 'url',
+                          'CampoEstudoCurso': 'campo_estudo',
+                          'LocalizacaoInstituicao': 'instituicao__localizacao',
+                          'DuracaoCurso': 'duracao',
+                          'ValorNacionalCurso': 'valor_anual_nacional',
+                          }
+
+    equivalencia_job = {'LocalizacaoTrabalho': 'localizacao',
+                        'DescricaoTrabalho': 'descricao',
+                        'TituloTrabalho': 'titulo',
+                        'RequisitosTrabalho': 'requisitos',
+                        'RemuneracaoTrabalho': 'remuneracao',
+                        'ModoTrabalho': 'modo'
+                        }
+
+    # CURSO
     g = rdflib.Graph()
-    ontologia = g.parse('ontology/onto_curso_.rdf')
-
-    myOntology = Namespace('https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology')
-
+    ontologia = g.parse('ontology/Ontologia_Curso.rdf')
     g.bind('myOntology', myOntology)
+    perfil_curso = PerfilCurso.objects.all()
+    last_data_raspagem = perfil_curso.distinct('data_raspagem').order_by('-data_raspagem').first().data_raspagem
+    if last_data_raspagem:
+        perfil_curso = perfil_curso.filter(data_raspagem=last_data_raspagem)
 
-    on = list(g.triples((None, RDF.type, myOntology.Turismo)))
-    for (sub, pred, obj) in on:
-        print('PPPPPPP', sub, pred, obj)
+    for x in perfil_curso:        
+        g.add((myOntology['NomeCurso'], OWL.NamedIndividual, Literal(x.nome)))
+        g.add((myOntology['RequisitosEntradaInstituicao'], OWL.NamedIndividual, Literal(x.instituicao.requisitos_entrada)))
+        g.add((myOntology['QualificacaoCurso'], OWL.NamedIndividual, Literal(x.qualificacao)))
+        g.add((myOntology['ValorInternacionalCurso'], OWL.NamedIndividual, Literal(x.valor_anual_internacional)))
+        g.add((myOntology['NomeInstituicao'], OWL.NamedIndividual, Literal(x.instituicao.nome)))
+        g.add((myOntology['DescricaoCurso'], OWL.NamedIndividual, Literal(x.descricao)))
+        g.add((myOntology['AreaCurso'], OWL.NamedIndividual, Literal(x.area)))
+        g.add((myOntology['ModoCurso'], OWL.NamedIndividual, Literal(x.modo)))
+        g.add((myOntology['UrlCurso'], OWL.NamedIndividual, Literal(x.url)))
+        g.add((myOntology['CampoEstudoCurso'], OWL.NamedIndividual, Literal(x.campo_estudo)))
+        g.add((myOntology['LocalizacaoInstituicao'], OWL.NamedIndividual, Literal(x.instituicao.localizacao)))
+        g.add((myOntology['DuracaoCurso'], OWL.NamedIndividual, Literal(x.duracao)))
+        g.add((myOntology['ValorNacionalCurso'], OWL.NamedIndividual, Literal(x.valor_anual_nacional)))
 
-
-    # perfil_curso = URIRef(myOntology["PerfilCurso"])
-    #
-    # g.add((perfil_curso, RDF.type, OWL.Class))
-    # g.add((perfil_curso, RDFS.subClassOf, OWL.Thing))
-    # g.add((perfil_curso, RDFS.label, OWL.Thing))
-
-    # for (sub, pred, obj) in ontologia:
-    #     print('PPPPPPP', sub, pred, obj)
-
-    # print(ontologia['ValorInternacionalCurso'])
-    # nome_curso = URIRef(ontologia['NomeCurso'])
-    # g.add((nome_curso, rdf.about, Literal['Turismo']))
+    # perfil_curso = list(g.triples((myOntology['NomeCurso'], OWL.NamedIndividual, None)))
+    # for (sub, pred, obj) in perfil_curso:
+    #     print((sub, pred, obj))
 
     s = g.serialize(format='turtle').decode('utf-8')
+    print('============================== Ontologia Curso ========================================')
+    print(s)
+
+    # JOB
+    gc = rdflib.Graph()
+    ontologia = gc.parse('ontology/Ontologia_Trabalho.rdf')
+
+    gc.bind('myOntology', myOntology)
+
+    perfil_job = PerfilTrabalho.objects.all()
+    last_data_raspagem = perfil_job.distinct('data_raspagem').order_by('-data_raspagem').first().data_raspagem
+    if last_data_raspagem:
+        perfil_job = perfil_job.filter(data_raspagem=last_data_raspagem)
+
+    for x in perfil_job:
+        gc.add((myOntology['LocalizacaoTrabalho'], OWL.NamedIndividual, Literal(x.localizacao)))
+        gc.add((myOntology['DescricaoTrabalho'], OWL.NamedIndividual, Literal(x.descricao)))
+        gc.add((myOntology['TituloTrabalho'], OWL.NamedIndividual, Literal(x.titulo)))
+        gc.add((myOntology['RequisitosTrabalho'], OWL.NamedIndividual, Literal(x.requisitos)))
+        gc.add((myOntology['RemuneracaoTrabalho'], OWL.NamedIndividual, Literal(x.remuneracao)))
+        gc.add((myOntology['ModoTrabalho'], OWL.NamedIndividual, Literal(x.modo)))
+
+    # perfil_job = list(gc.triples((myOntology['NomeCurso'], OWL.NamedIndividual, None)))
+    # for (sub, pred, obj) in perfil_job:
+    #     print((sub, pred, obj))
+
+    s = gc.serialize(format='turtle').decode('utf-8')
+    print('============================== Ontologia Trabalho ========================================')
     print(s)
 
     return redirect('/index')
