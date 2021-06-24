@@ -24,7 +24,8 @@ urlpatterns = [
     path('', RedirectView.as_view(url='/index/')),
     path('index/', views.index),
     path('populate_child/<str:codigo>', views.populate_child),
-    path('processa_ontologia', views.processa_ontologia),
+    path('visualiza_ontologia/', views.visualiza_ontologia),
+    path('serializa_ontologia/', views.serializa_ontologia),
     path('raspagem_curso', views.raspagem_curso),
     path('raspagem_job', views.raspagem_job),
 ]

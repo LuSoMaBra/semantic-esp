@@ -1,0 +1,135 @@
+{% extends "template_base.html" %}
+{% load static %}
+
+{% block style %}
+{% endblock %}
+
+{% block content %}
+    <div id="content" class="main-content">
+        <div class="layout-px-spacing">
+            <div class="row layout-top-spacing">
+                <div class="col-xl-6 col-6 layout-spacing">
+                    <div class="widget-content-area row ">
+                        <div class="widget-one col text-center mt-3">
+                            <h4 class="mb-4">Ontologia de Curso:</h4>
+                            <button class="btn btn-outline-primary btn-formato turtle ml-2 mr-2">Turtle</button>
+                            <button class="btn btn-outline-primary btn-formato nt ml-2 mr-2">NT</button>
+                            <button class="btn btn-outline-primary btn-formato prettyxml ml-2 mr-2">PrettyXML</button>
+                            <button class="btn btn-outline-primary btn-formato trig ml-2 mr-2">Trig</button>
+                            <button class="btn btn-outline-primary btn-formato xml ml-2 mr-2">XML</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-6 col-6 layout-spacing">
+                    <div class="widget-content-area row ">
+                        <div class="widget-one col text-center mt-3">
+                            <h4 class="mb-4">Ontologia de Trabalho:</h4>
+                            <button class="btn btn-outline-primary btn-formato-job turtle ml-2 mr-2">Turtle</button>
+                            <button class="btn btn-outline-primary btn-formato-job nt ml-2 mr-2">NT</button>
+                            <button class="btn btn-outline-primary btn-formato-job prettyxml ml-2 mr-2">PrettyXML</button>
+                            <button class="btn btn-outline-primary btn-formato-job trig ml-2 mr-2">Trig</button>
+                            <button class="btn btn-outline-primary btn-formato-job xml ml-2 mr-2">XML</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 layout-spacing">
+                    <div class="statbox widget box box-shadow">
+                        <div class="widget-header">
+                            <div class="row">
+                                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                    <h4 id="textTitle">Formato Turtle</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget-content widget-content-area">
+                            <div class="table-responsive">
+                                <textarea class="form-control" id="resultTextarea" rows="22">{{ curso_serializado.turtle }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-6 layout-spacing">
+                    <div class="statbox widget box box-shadow">
+                        <div class="widget-header">
+                            <div class="row">
+                                <div class="col-xl-12 col-md-12 col-sm-12 col-12">
+                                    <h4 id="textTitleJob">Formato Turtle</h4>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="widget-content widget-content-area">
+                            <div class="table-responsive">
+                                <textarea class="form-control" id="resultTextareaJob" rows="22">{{ job_serializado.turtle }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-wrapper">
+            <div class="footer-section f-section-1">
+                <p class="">Copyright © 2020, Free copy and use.</p>
+            </div>
+            <div class="footer-section f-section-2">
+                <p class="">Coded with <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-heart"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg></p>
+            </div>
+        </div>
+    </div>
+    <!--  END CONTENT PART  -->
+{% endblock %}
+
+{% block script %}
+    <script type="text/javascript">
+
+        $('.close-modal').on('click', function (e) {
+            $('.modal').modal("hide");
+        });
+
+        $('.btn-formato-job').on('click', function (e) {
+            if ( $(this).hasClass('nt') ) {
+                $('#textTitleJob').text('Formato NT')
+                $('#resultTextareaJob').val('{{ job_serializado.nt|escapejs }}')
+            };
+            if ( $(this).hasClass('prettyxml') ) {
+                $('#textTitleJob').text('Formato PrettyXML')
+                $('#resultTextareaJob').val('{{ job_serializado.prettyxml|escapejs }}')
+            };
+            if ( $(this).hasClass('trig') ) {
+                $('#textTitleJob').text('Formato Trig')
+                $('#resultTextareaJob').val('{{ job_serializado.trig|escapejs }}')
+            };
+            if ( $(this).hasClass('turtle') ) {
+                $('#textTitleJob').text('Formato Turtle')
+                $('#resultTextareaJob').val('{{ job_serializado.turtle|escapejs }}')
+            };
+            if ( $(this).hasClass('xml') ) {
+                $('#textTitleJob').text('Formato XML')
+                $('#resultTextareaJob').val('{{ job_serializado.xml|escapejs }}')
+            };
+        });
+
+        $('.btn-formato').on('click', function (e) {
+            if ( $(this).hasClass('nt') ) {
+                $('#textTitle').text('Formato NT')
+                $('#resultTextarea').val('{{ curso_serializado.nt|escapejs }}')
+            };
+            if ( $(this).hasClass('prettyxml') ) {
+                $('#textTitle').text('Formato PrettyXML')
+                $('#resultTextarea').val('{{ curso_serializado.prettyxml|escapejs }}')
+            };
+            if ( $(this).hasClass('trig') ) {
+                $('#textTitle').text('Formato Trig')
+                $('#resultTextarea').val('{{ curso_serializado.trig|escapejs }}')
+            };
+            if ( $(this).hasClass('turtle') ) {
+                $('#textTitle').text('Formato Turtle')
+                $('#resultTextarea').val('{{ curso_serializado.turtle|escapejs }}')
+            };
+            if ( $(this).hasClass('xml') ) {
+                $('#textTitle').text('Formato XML')
+                $('#resultTextarea').val('{{ curso_serializado.xml|escapejs }}')
+            };
+        });
+    </script>
+{% endblock %}
+

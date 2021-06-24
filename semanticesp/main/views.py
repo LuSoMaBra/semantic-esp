@@ -34,9 +34,10 @@ def raspagem_job(request):
 
     return redirect('/index')
 
+def visualiza_ontologia(request):
+    return render(request, 'visualiza_ontologia.html')
 
-
-def processa_ontologia(request):
+def serializa_ontologia(request):
 
     myOntology = Namespace('https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#')
 
@@ -91,9 +92,17 @@ def processa_ontologia(request):
     # for (sub, pred, obj) in perfil_curso:
     #     print((sub, pred, obj))
 
-    s = g.serialize(format='turtle').decode('utf-8')
-    print('============================== Ontologia Curso ========================================')
-    print(s)
+    # s = g.serialize(format='turtle').decode('utf-8')
+    # print('============================== Ontologia Curso ========================================')
+    # print(s)
+
+    curso_serializado = {}
+    curso_serializado['n3'] = g.serialize(format='n3').decode('utf-8')
+    curso_serializado['nt'] = g.serialize(format='nt').decode('utf-8')
+    curso_serializado['prettyxml'] = g.serialize(format='pretty-xml').decode('utf-8')
+    curso_serializado['trig'] = g.serialize(format='trig').decode('utf-8')
+    curso_serializado['turtle'] = g.serialize(format='turtle').decode('utf-8')
+    curso_serializado['xml'] = g.serialize(format='xml').decode('utf-8')
 
     # JOB
     gc = rdflib.Graph()
@@ -118,11 +127,20 @@ def processa_ontologia(request):
     # for (sub, pred, obj) in perfil_job:
     #     print((sub, pred, obj))
 
-    s = gc.serialize(format='turtle').decode('utf-8')
-    print('============================== Ontologia Trabalho ========================================')
-    print(s)
+    job_serializado = {}
+    job_serializado['n3'] = gc.serialize(format='n3').decode('utf-8')
+    job_serializado['nt'] = gc.serialize(format='nt').decode('utf-8')
+    job_serializado['prettyxml'] = gc.serialize(format='pretty-xml').decode('utf-8')
+    job_serializado['trig'] = gc.serialize(format='trig').decode('utf-8')
+    job_serializado['turtle'] = gc.serialize(format='turtle').decode('utf-8')
+    job_serializado['xml'] = gc.serialize(format='xml').decode('utf-8')
 
-    return redirect('/index')
+    context = {
+        'job_serializado': job_serializado,
+        'curso_serializado': curso_serializado,
+    }
+
+    return render(request, 'serializa_ontologia.html', context)
 
 
 

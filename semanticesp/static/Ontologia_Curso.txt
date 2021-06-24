@@ -1,0 +1,172 @@
+@prefix : <https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology> .
+
+<https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#isPartOff
+:isPartOff rdf:type owl:ObjectProperty ;
+           rdfs:domain :AreaCurso ,
+                       :CampoEstudoCurso ,
+                       :Curso ,
+                       :DescricaoCurso ,
+                       :DuracaoCurso ,
+                       :Instituicao ,
+                       :LocalizacaoInstituicao ,
+                       :ModoCurso ,
+                       :NomeCurso ,
+                       :NomeInstituicao ,
+                       :QualificacaoCurso ,
+                       :RequisitosEntradaInstituicao ,
+                       :UrlCurso ,
+                       :ValorAnual ,
+                       :ValorInternacionalCurso ,
+                       :ValorNacionalCurso ;
+           rdfs:range :Curso ,
+                      :Instituicao ,
+                      :PerfilCurso ,
+                      :ValorAnual ;
+           rdfs:label "é parte de"@pt .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#AreaCurso
+:AreaCurso rdf:type owl:Class ;
+           rdfs:subClassOf :Curso ;
+           rdfs:label "Área do Curso"@pt .
+
+
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#CampoEstudoCurso
+:CampoEstudoCurso rdf:type owl:Class ;
+                  rdfs:subClassOf :Curso ;
+                  rdfs:label "Campo de Estudo do Curso"@pt .
+
+
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#Curso
+:Curso rdf:type owl:Class ;
+       rdfs:subClassOf :PerfilCurso ;
+       owl:disjointWith :Instituicao ;
+       rdfs:label "Curso Superior"@pt .
+
+
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#DescricaoCurso
+:DescricaoCurso rdf:type owl:Class ;
+                rdfs:subClassOf :Curso ;
+                rdfs:label "Descrição do Curso"@pt .
+
+
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#DuracaoCurso
+:DuracaoCurso rdf:type owl:Class ;
+              rdfs:subClassOf :Curso ;
+              rdfs:label "Duração do Curso (anos)"@pt .
+
+
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#Instituicao
+:Instituicao rdf:type owl:Class ;
+             rdfs:subClassOf :PerfilCurso ;
+             rdfs:label "Instituição de Ensino"@pt .
+
+
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#LocalizacaoInstituicao
+:LocalizacaoInstituicao rdf:type owl:Class ;
+                        rdfs:subClassOf :Instituicao ;
+                        rdfs:label "Localização da Instituição"@pt .
+
+
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#ModoCurso
+:ModoCurso rdf:type owl:Class ;
+           rdfs:subClassOf :Curso ;
+           rdfs:label "Modo Curso (Presencial/Remoto)"@pt .
+
+
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#NomeCurso
+:NomeCurso rdf:type owl:Class ;
+           rdfs:subClassOf :Curso ;
+           rdfs:label "Nome do Curso"@pt .
+
+
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#NomeInstituicao
+:NomeInstituicao rdf:type owl:Class ;
+                 rdfs:subClassOf :Instituicao ;
+                 rdfs:label "Nome da Universidade / Instituto"@pt .
+
+
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#PerfilCurso
+:PerfilCurso rdf:type owl:Class .
+
+
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#QualificacaoCurso
+:QualificacaoCurso rdf:type owl:Class ;
+                   rdfs:subClassOf :Curso ;
+                   rdfs:label "Qualificação do Curso"@pt .
+
+
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#RequisitosEntradaInstituicao
+:RequisitosEntradaInstituicao rdf:type owl:Class ;
+                              rdfs:subClassOf :Instituicao ;
+                              rdfs:label "Requisitos de Entrada na Instituição"@pt .
+
+
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#UrlCurso
+:UrlCurso rdf:type owl:Class ;
+          rdfs:subClassOf :Curso ;
+          rdfs:label "URL do Curso"@pt .
+
+
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#ValorAnual
+:ValorAnual rdf:type owl:Class ;
+            rdfs:subClassOf :Curso ;
+            rdfs:label "Valores de Propina (Anual)"@pt .
+
+
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#ValorInternacionalCurso
+:ValorInternacionalCurso rdf:type owl:Class ;
+                         rdfs:subClassOf :ValorAnual ;
+                         owl:disjointWith :ValorNacionalCurso ;
+                         rdfs:label "Valor da Propina para Alunos Internacionais"@pt .
+
+
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#ValorNacionalCurso
+:ValorNacionalCurso rdf:type owl:Class ;
+                    rdfs:subClassOf :ValorAnual ;
+                    rdfs:label "Valor da Propina para Alunos Nacionais"@pt .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :AreaCurso
+                :CampoEstudoCurso
+                :DescricaoCurso
+                :DuracaoCurso
+                :ModoCurso
+                :NomeCurso
+                :QualificacaoCurso
+                :UrlCurso
+                :ValorAnual
+              )
+] .
+
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :LocalizacaoInstituicao
+                :NomeInstituicao
+                :RequisitosEntradaInstituicao
+              )
+] .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
