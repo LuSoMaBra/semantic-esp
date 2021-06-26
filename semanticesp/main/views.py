@@ -92,6 +92,26 @@ def serializa_ontologia(request):
     # for (sub, pred, obj) in perfil_curso:
     #     print((sub, pred, obj))
 
+    q = 'SELECT ?label ?NamedIndividual WHERE { ?AreaCurso rdfs:label ?label }'
+    # q = 'SELECT ?NamedIndividual WHERE { ?AreaCurso owl:Class ?AreaCurso }'
+
+    x1 = g.query(q)
+    for x in x1:
+        print(x)
+
+    # from SPARQLWrapper import SPARQLWrapper, JSON
+    #
+    # sparql = SPARQLWrapper(ontologia.namespaces())
+    # sparql.setQuery("""
+    #     SELECT ?domain WHERE { ?domain rdfs:domain ?NomeCurso }
+    # """)
+    # sparql.setReturnFormat(JSON)
+    # results = sparql.query().convert()
+    #
+    # for result in results["results"]["bindings"]:
+    #     print(result["label"]["value"])
+
+
     # s = g.serialize(format='turtle').decode('utf-8')
     # print('============================== Ontologia Curso ========================================')
     # print(s)
