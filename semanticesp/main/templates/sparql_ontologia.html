@@ -11,7 +11,7 @@
                 <div class="row layout-top-spacing">
                     <div class="col-xl-12 col-12 ">
                         <div class="row ml-3 mr-3">
-                            <div class="widget-one col-8 mt-3">
+                            <div class="widget-one col-7 mt-3">
                                 <div class="form-group">
                                     <label>Sentença SPARQL</label>
                                     <textarea class="form-control form-control-sm bs-tooltip" name="sparql_text" data-toggle="tooltip" data-placement="right" data-original-title="Digite aqui uma sentença SPARQL compatível com a ontologia" required maxlength="256" size="256" rows="2">{{ sparql_query }}</textarea>
@@ -19,7 +19,7 @@
                                     <input hidden value="curso" id="run_on" name="run_on">
                                 </div>
                             </div>
-                            <div class="widget-one col-4 mt-5 text-right">
+                            <div class="widget-one col-5 mt-5 text-right">
                                 <button onclick="set_run_on('curso')" form="run_sparql_ontologia" type="submit" class="btn btn-outline-primary btn-formato xml ml-2 mr-4">Executa na Ontologia Cursos</button>
                                 <button onclick="set_run_on('job')" form="run_sparql_ontologia" type="submit" class="btn btn-outline-primary btn-formato xml ml-2 mr-4">Executa na Ontologia Trabalho</button>
                             </div>
