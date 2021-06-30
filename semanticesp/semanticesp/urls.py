@@ -25,6 +25,8 @@ urlpatterns = [
     path('index/', views.index),
     path('populate_child/<str:codigo>', views.populate_child),
     path('visualiza_ontologia/', views.visualiza_ontologia),
+    path('sparql_ontologia/', views.sparql_ontologia),
+    path('run_sparql_ontologia/', views.run_sparql_ontologia),
     path('serializa_ontologia/', views.serializa_ontologia),
     path('raspagem_curso', views.raspagem_curso),
     path('raspagem_job', views.raspagem_job),

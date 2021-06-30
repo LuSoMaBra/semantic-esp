@@ -37,7 +37,74 @@ def raspagem_job(request):
 def visualiza_ontologia(request):
     return render(request, 'visualiza_ontologia.html')
 
+def sparql_ontologia(request):
+
+    context = {
+        'sparql_query': '',
+        'sparql_resultado': 'Sem resultados para mostrar.',
+    }
+
+    return render(request, 'sparql_ontologia.html', context)
+
 def serializa_ontologia(request):
+    g, gc = processa_ontologia()
+
+    curso_serializado = {}
+    curso_serializado['n3'] = g.serialize(format='n3').decode('utf-8')
+    curso_serializado['nt'] = g.serialize(format='nt').decode('utf-8')
+    curso_serializado['prettyxml'] = g.serialize(format='pretty-xml').decode('utf-8')
+    curso_serializado['trig'] = g.serialize(format='trig').decode('utf-8')
+    curso_serializado['turtle'] = g.serialize(format='turtle').decode('utf-8')
+    curso_serializado['xml'] = g.serialize(format='xml').decode('utf-8')
+
+    job_serializado = {}
+    job_serializado['n3'] = gc.serialize(format='n3').decode('utf-8')
+    job_serializado['nt'] = gc.serialize(format='nt').decode('utf-8')
+    job_serializado['prettyxml'] = gc.serialize(format='pretty-xml').decode('utf-8')
+    job_serializado['trig'] = gc.serialize(format='trig').decode('utf-8')
+    job_serializado['turtle'] = gc.serialize(format='turtle').decode('utf-8')
+    job_serializado['xml'] = gc.serialize(format='xml').decode('utf-8')
+
+    context = {
+        'job_serializado': job_serializado,
+        'curso_serializado': curso_serializado,
+    }
+
+    return render(request, 'serializa_ontologia.html', context)
+
+def run_sparql_ontologia(request):
+    g, gc = processa_ontologia()
+
+    sparql_query = str(request.POST.get('sparql_text', '').strip())
+    run_on = request.POST.get('run_on', '')
+
+    try:
+        if run_on == 'curso':
+            resultado = g.query(sparql_query)
+        elif run_on == 'job':
+            resultado = gc.query(sparql_query)
+        else:
+            resultado = None
+    except:
+        resultado = None
+
+    sparql_resultado = []
+    if resultado:
+        for x in resultado:
+            sparql_resultado.append(str(x) + '\n')
+
+    if not sparql_resultado:
+        sparql_resultado = ['Ocorreu um erro ao executar a query. \n\nSem resultados para mostrar.']
+
+    context = {
+        'sparql_query': sparql_query,
+        'sparql_resultado': sparql_resultado,
+    }
+
+    return render(request, 'sparql_ontologia.html', context)
+
+
+def processa_ontologia():
 
     myOntology = Namespace('https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#')
 
@@ -92,38 +159,6 @@ def serializa_ontologia(request):
     # for (sub, pred, obj) in perfil_curso:
     #     print((sub, pred, obj))
 
-    q = 'SELECT ?label ?NamedIndividual WHERE { ?AreaCurso rdfs:label ?label }'
-    # q = 'SELECT ?NamedIndividual WHERE { ?AreaCurso owl:Class ?AreaCurso }'
-
-    x1 = g.query(q)
-    for x in x1:
-        print(x)
-
-    # from SPARQLWrapper import SPARQLWrapper, JSON
-    #
-    # sparql = SPARQLWrapper(ontologia.namespaces())
-    # sparql.setQuery("""
-    #     SELECT ?domain WHERE { ?domain rdfs:domain ?NomeCurso }
-    # """)
-    # sparql.setReturnFormat(JSON)
-    # results = sparql.query().convert()
-    #
-    # for result in results["results"]["bindings"]:
-    #     print(result["label"]["value"])
-
-
-    # s = g.serialize(format='turtle').decode('utf-8')
-    # print('============================== Ontologia Curso ========================================')
-    # print(s)
-
-    curso_serializado = {}
-    curso_serializado['n3'] = g.serialize(format='n3').decode('utf-8')
-    curso_serializado['nt'] = g.serialize(format='nt').decode('utf-8')
-    curso_serializado['prettyxml'] = g.serialize(format='pretty-xml').decode('utf-8')
-    curso_serializado['trig'] = g.serialize(format='trig').decode('utf-8')
-    curso_serializado['turtle'] = g.serialize(format='turtle').decode('utf-8')
-    curso_serializado['xml'] = g.serialize(format='xml').decode('utf-8')
-
     # JOB
     gc = rdflib.Graph()
     ontologia = gc.parse('ontology/Ontologia_Trabalho.rdf')
@@ -147,21 +182,7 @@ def serializa_ontologia(request):
     # for (sub, pred, obj) in perfil_job:
     #     print((sub, pred, obj))
 
-    job_serializado = {}
-    job_serializado['n3'] = gc.serialize(format='n3').decode('utf-8')
-    job_serializado['nt'] = gc.serialize(format='nt').decode('utf-8')
-    job_serializado['prettyxml'] = gc.serialize(format='pretty-xml').decode('utf-8')
-    job_serializado['trig'] = gc.serialize(format='trig').decode('utf-8')
-    job_serializado['turtle'] = gc.serialize(format='turtle').decode('utf-8')
-    job_serializado['xml'] = gc.serialize(format='xml').decode('utf-8')
-
-    context = {
-        'job_serializado': job_serializado,
-        'curso_serializado': curso_serializado,
-    }
-
-    return render(request, 'serializa_ontologia.html', context)
-
+    return g, gc
 
 
 def populate_child(request, codigo):
