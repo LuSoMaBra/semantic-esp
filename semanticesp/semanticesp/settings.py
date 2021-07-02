@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
+# http://xmlns.com/foaf/spec/#term_Person          criar documentação de cada termo das ontologias
+
 from pathlib import Path
 
 import os
