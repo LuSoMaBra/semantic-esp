@@ -1,0 +1,77 @@
+@prefix : <http://example.org/Book#> .
+@prefix bo: <http://www.daml.org/services/owl-s/AmazonWS/1.1/Book.owl/> .
+@prefix dc: <https://www.dublincore.org/specifications/dublin-core/dcmi-terms/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix foaf: <http://xmlns.com/foaf/spec/> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix bo: <http://www.daml.org/services/owl-s/AmazonWS/1.1/Book.owl/> .
+@prefix ex: <http://example.org/>
+
+#################################################################
+#    Object Properties
+#################################################################
+
+dc:hasFormat a rdf:Property, owl:ObjectProperty ;
+	rdfs:domain bo:Book ;
+	rdfs:range dc:MediaType .
+
+bo:publisher a rdf:Property, owl:ObjectProperty ;
+	rdfs:domain bo:Book ;
+	rdfs:range foaf:Agent .
+
+foaf:made a rdf:Property, owl:ObjectProperty ;
+	rdfs:domain bo:Book ;
+	rdfs:range bo:Author .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+dc:format a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain dc:MediaType ;
+	rdfs:range xsd:string .
+
+dc:language a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain bo:Book ;
+	rdfs:range xsd:string .
+
+dc:type a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain bo:Book ;
+	rdfs:range xsd:string .
+
+bo:isbn a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain bo:Book ;
+	rdfs:range xsd:string .
+
+bo:name a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain bo:Author ;
+	rdfs:range xsd:string .
+
+bo:publicationDate a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain bo:Book ;
+	rdfs:range xsd:dateTime .
+
+bo:title a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain bo:Book ;
+	rdfs:range xsd:string .
+
+ex:careerDuration a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain bo:Author ;
+	rdfs:range xsd:string .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+dc:MediaType a owl:Class, rdfs:Class.
+
+bo:Author a owl:Class, rdfs:Class .
+
+bo:Book a owl:Class, rdfs:Class .
+
+foaf:Agent a owl:Class, rdfs:Class .
