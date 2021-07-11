@@ -1,1 +1,0 @@
-This is a directory of ontologies OC and OP
