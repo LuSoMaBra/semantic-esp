@@ -112,6 +112,7 @@ class PerfilTrabalho(models.Model):
     remuneracao = models.CharField(max_length=255, blank=False, null=False)
     localizacao = models.CharField(max_length=255, blank=False, null=False)
     modo = models.CharField(max_length=255, blank=False, null=False)
+    area_curso = models.CharField(max_length=255, blank=False, null=False)
     data_raspagem = models.DateTimeField(blank=True, null=True)
 
     class Meta:
@@ -126,7 +127,7 @@ class PerfilCurso(models.Model):
     url = models.CharField(max_length=255, blank=False, null=False)
     descricao = models.CharField(max_length=2048, blank=True, null=True)
     campo_estudo = models.CharField(max_length=255, blank=False, null=False)
-    area = models.CharField(max_length=255, blank=False, null=False)
+    area_curso = models.CharField(max_length=255, blank=False, null=False)
     valor_anual_nacional = models.CharField(max_length=255, blank=False, null=False)
     valor_anual_internacional = models.CharField(max_length=255, blank=False, null=False)
     duracao = models.CharField(max_length=255, blank=False, null=False)

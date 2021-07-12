@@ -53,13 +53,14 @@ class NETEMPREGOSpider(scrapy.Spider):
         'remuneracao',
         'localizacao',
         'modo',
-        'data_raspagem'
+        'data_raspagem',
+        'area_curso'
     ]
 
     # link base: "Formação Superior", "Tempo Integral"
     link_base = 'https://www.net-empregos.com/pesquisa-empregos.asp?chaves=Forma%E7%E3o+Superior&cidade=&categoria={}&zona=0&tipo=1'
 
-    areas = selectDB(connectDB(), 'select area from perfil_curso')
+    areas = selectDB(connectDB(), 'select area_curso from perfil_curso')
 
     start_urls = []
     all_areas_list = []
@@ -129,4 +130,5 @@ class NETEMPREGOSpider(scrapy.Spider):
                 for key, value in self.area_dict.items():
                     if categoria in value:
                         requisitos = key
-                        insertDB(connection=connectDB(), tabela='perfil_trabalho', fields=self.fields, values=[titulo, descricao, requisitos, remuneracao, localizacao, modo, self.data_raspagem])
+                        area_curso = requisitos
+                        insertDB(connection=connectDB(), tabela='perfil_trabalho', fields=self.fields, values=[titulo, descricao, requisitos, remuneracao, localizacao, modo, self.data_raspagem, area_curso])

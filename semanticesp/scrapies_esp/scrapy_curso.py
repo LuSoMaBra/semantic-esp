@@ -16,7 +16,7 @@ class UTADSpider(scrapy.Spider):
         'url',
         'descricao',
         'campo_estudo',
-        'area',
+        'area_curso',
         'valor_anual_nacional',
         'valor_anual_internacional',
         'duracao',
@@ -41,7 +41,7 @@ class UTADSpider(scrapy.Spider):
         url = response.url
         qualificacao = dados_curso[0].css('div .col-xs-12').extract_first(default='').replace('<br>', '').replace('</div>', '').replace('<div class="col-xs-12 col-md-8">', '')
         descricao = dados_curso[1].css('div .col-xs-12').extract_first(default='').replace('<br>', '').replace('</div>', '').replace('<div class="col-xs-12 col-md-8">', '')
-        area = dados_curso[2].css('div .col-xs-12').extract_first(default='').replace('<br>', '').replace('</div>', '').replace('<div class="col-xs-12 col-md-8">', '').split(' <a ')[0].split('(')[0]
+        area_curso = dados_curso[2].css('div .col-xs-12').extract_first(default='').replace('<br>', '').replace('</div>', '').replace('<div class="col-xs-12 col-md-8">', '').split(' <a ')[0].split('(')[0]
         campo_estudo = dados_curso[2].css('div .col-xs-12').extract_first(default='').replace('<br>', '').replace('</div>', '').replace('<div class="col-xs-12 col-md-8">', '').split(' <a ')[0]
         duracao = dados_curso[6].css('div .col-xs-12').extract_first(default='').replace('<br>', '').replace('</div>', '').replace('<div class="col-xs-12 col-md-8">', '')
         modo = dados_curso[5].css('div .col-xs-12').extract_first(default='').replace('<br>', '').replace('</div>', '').replace('<div class="col-xs-12 col-md-8">', '')
@@ -53,7 +53,7 @@ class UTADSpider(scrapy.Spider):
             url,
             descricao,
             campo_estudo,
-            area,
+            area_curso,
             self.valor_anual_nacional,
             self.valor_anual_internacional,
             duracao,
