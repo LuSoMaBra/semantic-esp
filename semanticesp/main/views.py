@@ -15,12 +15,15 @@ from rdflib.namespace import RDF, RDFS, OWL, FOAF
 from urllib.request import urlopen
 
 def index(request):
+    return render(request, 'index.html')
+
+def importa_dados(request):
     sites = SourceData.objects.all().order_by('codigo')
     context = {
         'sites': sites,
     }
 
-    return render(request, 'index.html', context)
+    return render(request, 'importa_dados.html', context)
 
 def raspagem_curso(request):
 
@@ -47,59 +50,71 @@ def sparql_ontologia(request):
     return render(request, 'sparql_ontologia.html', context)
 
 def serializa_ontologia(request):
-    g, gc = processa_ontologia()
+    try:
+        g, gc = processa_ontologia()
 
-    curso_serializado = {}
-    curso_serializado['n3'] = g.serialize(format='n3').decode('utf-8')
-    curso_serializado['nt'] = g.serialize(format='nt').decode('utf-8')
-    curso_serializado['prettyxml'] = g.serialize(format='pretty-xml').decode('utf-8')
-    curso_serializado['trig'] = g.serialize(format='trig').decode('utf-8')
-    curso_serializado['turtle'] = g.serialize(format='turtle').decode('utf-8')
-    curso_serializado['xml'] = g.serialize(format='xml').decode('utf-8')
+        curso_serializado = {}
+        curso_serializado['n3'] = g.serialize(format='n3').decode('utf-8')
+        curso_serializado['nt'] = g.serialize(format='nt').decode('utf-8')
+        curso_serializado['prettyxml'] = g.serialize(format='pretty-xml').decode('utf-8')
+        curso_serializado['trig'] = g.serialize(format='trig').decode('utf-8')
+        curso_serializado['turtle'] = g.serialize(format='turtle').decode('utf-8')
+        curso_serializado['xml'] = g.serialize(format='xml').decode('utf-8')
 
-    job_serializado = {}
-    job_serializado['n3'] = gc.serialize(format='n3').decode('utf-8')
-    job_serializado['nt'] = gc.serialize(format='nt').decode('utf-8')
-    job_serializado['prettyxml'] = gc.serialize(format='pretty-xml').decode('utf-8')
-    job_serializado['trig'] = gc.serialize(format='trig').decode('utf-8')
-    job_serializado['turtle'] = gc.serialize(format='turtle').decode('utf-8')
-    job_serializado['xml'] = gc.serialize(format='xml').decode('utf-8')
+        job_serializado = {}
+        job_serializado['n3'] = gc.serialize(format='n3').decode('utf-8')
+        job_serializado['nt'] = gc.serialize(format='nt').decode('utf-8')
+        job_serializado['prettyxml'] = gc.serialize(format='pretty-xml').decode('utf-8')
+        job_serializado['trig'] = gc.serialize(format='trig').decode('utf-8')
+        job_serializado['turtle'] = gc.serialize(format='turtle').decode('utf-8')
+        job_serializado['xml'] = gc.serialize(format='xml').decode('utf-8')
 
-    context = {
-        'job_serializado': job_serializado,
-        'curso_serializado': curso_serializado,
-    }
+        context = {
+            'job_serializado': job_serializado,
+            'curso_serializado': curso_serializado,
+        }
+
+        messages.success(request, 'Serialização da ontologia executada com sucesso.'.format(codigo))
+
+    except Exception as error:
+        messages.error(request, 'Ocorreu um erro ao serializar a ontologia. Operação não efetuada.')
 
     return render(request, 'serializa_ontologia.html', context)
 
 def run_sparql_ontologia(request):
-    g, gc = processa_ontologia()
-
-    sparql_query = str(request.POST.get('sparql_text', '').strip())
-    run_on = request.POST.get('run_on', '')
-
     try:
-        if run_on == 'curso':
-            resultado = g.query(sparql_query)
-        elif run_on == 'job':
-            resultado = gc.query(sparql_query)
-        else:
+        g, gc = processa_ontologia()
+        sparql_query = str(request.POST.get('sparql_text', '').strip())
+        run_on = request.POST.get('run_on', '')
+
+        try:
+            if run_on == 'curso':
+                resultado = g.query(sparql_query)
+            elif run_on == 'job':
+                resultado = gc.query(sparql_query)
+            else:
+                resultado = None
+        except:
             resultado = None
-    except:
-        resultado = None
 
-    sparql_resultado = []
-    if resultado:
-        for x in resultado:
-            sparql_resultado.append(str(x) + '\n')
+        sparql_resultado = []
+        if resultado:
+            for x in resultado:
+                sparql_resultado.append(str(x) + '\n')
 
-    if not sparql_resultado:
-        sparql_resultado = ['Ocorreu um erro ao executar a query. \n\nSem resultados para mostrar.']
+        if not sparql_resultado:
+            sparql_resultado = ['Ocorreu um erro ao executar a query. \n\nSem resultados para mostrar.']
+            messages.error(request, 'Ocorreu um erro ao executar a query. Operação não efetuada.')
 
-    context = {
-        'sparql_query': sparql_query,
-        'sparql_resultado': sparql_resultado,
-    }
+        context = {
+            'sparql_query': sparql_query,
+            'sparql_resultado': sparql_resultado,
+        }
+
+        messages.success(request, 'Query executada com sucesso.'.format(codigo))
+
+    except Exception as error:
+        messages.error(request, 'Ocorreu um erro ao executar a query. Operação não efetuada.')
 
     return render(request, 'sparql_ontologia.html', context)
 
@@ -114,7 +129,7 @@ def processa_ontologia():
                           'ValorInternacionalCurso': 'valor_anual_internacional',
                           'NomeInstituicao': 'instituicao__nome',
                           'DescricaoCurso':'descricao',
-                          'AreaCurso': 'area',
+                          'AreaCurso': 'area_curso',
                           'ModoCurso': 'modo',
                           'UrlCurso': 'url',
                           'CampoEstudoCurso': 'campo_estudo',
@@ -147,7 +162,7 @@ def processa_ontologia():
         g.add((myOntology['ValorInternacionalCurso'], OWL.NamedIndividual, Literal(x.valor_anual_internacional)))
         g.add((myOntology['NomeInstituicao'], OWL.NamedIndividual, Literal(x.instituicao.nome)))
         g.add((myOntology['DescricaoCurso'], OWL.NamedIndividual, Literal(x.descricao)))
-        g.add((myOntology['AreaCurso'], OWL.NamedIndividual, Literal(x.area)))
+        g.add((myOntology['AreaCurso'], OWL.NamedIndividual, Literal(x.area_curso)))
         g.add((myOntology['ModoCurso'], OWL.NamedIndividual, Literal(x.modo)))
         g.add((myOntology['UrlCurso'], OWL.NamedIndividual, Literal(x.url)))
         g.add((myOntology['CampoEstudoCurso'], OWL.NamedIndividual, Literal(x.campo_estudo)))
@@ -234,7 +249,7 @@ def populate_child(request, codigo):
                     ultimo_pref = res.json()[0]['UltimoPref']
                     lines = res.json()[0]['Dados'][ultimo_pref]
                     for line in lines:
-                        if 'valor' in line.keys(): # pega somente se tiver algum valor (exclui informações confienciais)
+                        if 'valor' in line.keys(): # pega somente se tiver algum valor (exclui informações confidenciais)
                             vol_neg_empresa_regiao, c = VolNegEmpresaRegiao.objects.update_or_create(
                                 geocod = line['geocod'],
                                 defaults = {
@@ -333,7 +348,7 @@ def populate_child(request, codigo):
             messages.error(request, 'Ocorreu um erro ao processar o arquivo {}. Operação não efetuada.'.format(codigo))
             messages.info(request, 'Erro: {}'.format(error))
 
-    return redirect('/index')
+    return redirect('/importa_dados')
 
 
 
