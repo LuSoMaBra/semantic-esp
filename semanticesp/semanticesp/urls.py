@@ -23,7 +23,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', RedirectView.as_view(url='/index/')),
     path('index/', views.index),
-    path('populate_child/<str:codigo>', views.populate_child),
+    path('populate_child/<int:id>', views.populate_child),
     path('visualiza_ontologia/', views.visualiza_ontologia),
     path('sparql_ontologia/', views.sparql_ontologia),
     path('run_sparql_ontologia/', views.run_sparql_ontologia),

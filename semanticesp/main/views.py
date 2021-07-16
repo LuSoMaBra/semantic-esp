@@ -18,7 +18,7 @@ def index(request):
     return render(request, 'index.html')
 
 def importa_dados(request):
-    sites = SourceData.objects.all().order_by('codigo')
+    sites = ProvenanceStatement.objects.all().order_by('id')
     context = {
         'sites': sites,
     }
@@ -200,97 +200,59 @@ def processa_ontologia():
     return g, gc
 
 
-def populate_child(request, codigo):
+def populate_child(request, id):
     try:
-        source_data = SourceData.objects.get(codigo=codigo)
+        provenance_statement = ProvenanceStatement.objects.get(id=id)
     except:
-        source_data = None
-    if source_data:
+        provenance_statement = None
+    if provenance_statement:
         populated = False
         try:
-            # if source_data.tipo == 'pdf':
-            #     res = urlopen(source_data.uri)
+            # if provenance_statement.source == 'pdf':
+            #     res = urlopen(provenance_statement.url)
             # else:
-            res = requests.get(source_data.uri)
+            res = requests.get(provenance_statement.url)
         except Exception as error:
             res = None
             messages.error(request, 'Ocorreu um erro ao efetuar a requisiçao do arquivo {}. Operação não efetuada.'.format(codigo))
             messages.info(request, 'Erro: {}'.format(error))
         try:
-            if (res) and (source_data.tipo == 'json'):
-                if codigo == 'InstituicoesdoEnsinoSuperior':
+            if (res) and (provenance_statement.source == 'json'):
+                if provenance_statement.codigo == 'InstituicoesdoEnsinoSuperior':
                     for defaults in (res.json()['d']):
                         partition_key = defaults['PartitionKey']
                         row_key = defaults['RowKey']
                         defaults.pop('PartitionKey')
                         defaults.pop('RowKey')
+                        defaults['Timestamp'] = (defaults['Timestamp'].split('T')[0] + ' ' + defaults['Timestamp'].split('T')[1].split('.')[0])
+                        modified = datetime.strptime(defaults['Timestamp'], '%Y-%m-%d %H:%M:%S')
+                        codigodoestabelecimento = '{:0>4}'.format(defaults['codigodoestabelecimento'])
+                        defaults.pop('codigodoestabelecimento')
                         populated, c = InstituicoesdoEnsinoSuperior.objects.update_or_create(
                             PartitionKey = partition_key,
                             RowKey = row_key,
-                            source_data = source_data.codigo,
+                            provenance_statement = provenance_statement,
+                            codigodoestabelecimento = codigodoestabelecimento,
                             defaults = defaults
                         )
-                elif codigo == 'ClassNacionaldeareasdeeducacaoeformacao':
+                elif provenance_statement.codigo == 'ClassNacionaldeareasdeeducacaoeformacao':
                     for defaults in (res.json()['d']):
                         partition_key = defaults['PartitionKey']
                         row_key = defaults['RowKey']
                         defaults.pop('PartitionKey')
                         defaults.pop('RowKey')
+                        defaults['Timestamp'] = (defaults['Timestamp'].split('T')[0] + ' ' + defaults['Timestamp'].split('T')[1].split('.')[0])
+                        modified = datetime.strptime(defaults['Timestamp'], '%Y-%m-%d %H:%M:%S')
+                        defaults['estabelecimento'] = defaults['estabelecimento'].split(' - ')[0]
                         populated, c = ClassNacionaldeareasdeeducacaoeformacao.objects.update_or_create(
                             PartitionKey = partition_key,
                             RowKey = row_key,
-                            source_data = source_data.codigo,
+                            provenance_statement = provenance_statement,
                             defaults = defaults
                         )
-                    source_data.data_ultima_atualizacao = datetime.now(tz=utc)
-                    source_data.populated = True
-                    source_data.save()
-                elif codigo == 'VolNegEmpresas':
-                    ultimo_pref = res.json()[0]['UltimoPref']
-                    lines = res.json()[0]['Dados'][ultimo_pref]
-                    for line in lines:
-                        if 'valor' in line.keys(): # pega somente se tiver algum valor (exclui informações confidenciais)
-                            vol_neg_empresa_regiao, c = VolNegEmpresaRegiao.objects.update_or_create(
-                                geocod = line['geocod'],
-                                defaults = {
-                                    'geodsg': line['geodsg']
-                                }
-                            )
-                            if line['dim_3'].isnumeric():
-                                vol_neg_empresa_cae, c = VolNegEmpresaCae.objects.update_or_create(
-                                    dim_3 = line['dim_3'],
-                                    defaults = {
-                                        'dim_3_t': line['dim_3_t']
-                                    }
-                                )
-                                vol_neg_empresa_dados, c = VolNegEmpresaDados.objects.update_or_create(
-                                    geocod = vol_neg_empresa_regiao,
-                                    dim_3 = vol_neg_empresa_cae,
-                                    ultimo_pref = ultimo_pref,
-                                    defaults = {
-                                        'valor': line['valor']
-                                    }
-                                )
-                    vol_neg_empresa_regiao = VolNegEmpresaRegiao.objects.all()
-                    for x in vol_neg_empresa_regiao:
-                        vol_neg_empresa_dados = VolNegEmpresaDados.objects.filter(geocod=x)
-                        total_valor = 0
-                        for y in vol_neg_empresa_dados:
-                            total_valor += y.valor
-                        x.total_ultimo_pref = total_valor
-                        x.save()
-                    vol_neg_empresa_regiao = VolNegEmpresaCae.objects.all()
-                    for x in vol_neg_empresa_regiao:
-                        vol_neg_empresa_dados = VolNegEmpresaDados.objects.filter(dim_3=x)
-                        total_valor = 0
-                        for y in vol_neg_empresa_dados:
-                            total_valor += y.valor
-                        x.total_ultimo_pref = total_valor
-                        x.save()
-                    populated = vol_neg_empresa_regiao
                 else:
                     pass
-            elif (res) and (source_data.tipo == 'xls'):
+            elif (res) and (provenance_statement.source == 'xls'):
 
                 file = open('tmp_excel_work.xls', 'wb')
                 file.write(res.content)
@@ -307,7 +269,7 @@ def populate_child(request, codigo):
                     # print(sheet.row(rx)[0])
                 os.remove(file.name)
 
-            elif (res) and (source_data.tipo == 'xls?'):
+            elif (res) and (provenance_statement.source == 'xls?'):
                 file = open('tmp_excel_work.xlsx', 'wb')
                 file.write(res.content)
 
@@ -324,7 +286,7 @@ def populate_child(request, codigo):
                 wb.close()
                 os.remove(file.name)
 
-            elif (res) and (source_data.tipo == 'pdf'):
+            elif (res) and (provenance_statement.source == 'pdf'):
 
                 file = open('tmp_pdf_work.pdf', 'wb')
                 file.write(res.content)
@@ -338,14 +300,16 @@ def populate_child(request, codigo):
                 # os.remove(file.name)
             else:
                 pass
-            if populated:   # deve atualizar essa variável para atualização do source_data
-                source_data.data_ultimo_acesso = datetime.now(tz=utc)
-                source_data.populated = True
-                source_data.save()
-            messages.success(request, 'Processamento do Arquivo: "{}" efetuado com sucesso.'.format(codigo))
+            if populated:   # deve atualizar essa variável para atualização do provenance_statement
+                provenance_statement.creator = 'Portal de dados abertos da Administração Pública (https://dados.gov.pt)'
+                provenance_statement.created = modified
+                provenance_statement.modified = modified
+                provenance_statement.last_extraction = datetime.now(tz=utc)
+                provenance_statement.populated = True
+                provenance_statement.save()
+            messages.success(request, 'Processamento do Arquivo: "{}" efetuado com sucesso.'.format(provenance_statement.codigo))
         except Exception as error:
-            raise
-            messages.error(request, 'Ocorreu um erro ao processar o arquivo {}. Operação não efetuada.'.format(codigo))
+            messages.error(request, 'Ocorreu um erro ao processar o arquivo {}. Operação não efetuada.'.format(provenance_statement.codigo))
             messages.info(request, 'Erro: {}'.format(error))
 
     return redirect('/importa_dados')

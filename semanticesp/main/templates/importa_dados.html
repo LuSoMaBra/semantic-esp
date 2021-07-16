@@ -38,31 +38,33 @@
                                         {% for x in sites %}
                                             <tr>
                                                 <td>{{ x.codigo }}</td>
-                                                <td>{{ x.nome }}</td>
-                                                <td>{{ x.uri }}</td>
-                                                <td class="text-center">{{ x.data_ultimo_acesso|date:'d/M/Y H:i' }}</td>
+                                                <td>{{ x.title }}</td>
+                                                <td>{{ x.url }}</td>
+                                                <td class="text-center">{{ x.last_extraction|date:'d/M/Y H:i' }}</td>
                                                 <td class="text-center">{% if x.populated %}<span class="badge badge-success">Sim{% else %}<span class="badge badge-danger">Não{% endif %}</td>
-                                                {% if x.tipo == 'json' %}
-                                                    <td class="text-center"><span class="badge badge-success">{{ x.tipo }}</span></td>
-                                                {% elif x.tipo == 'pdf' %}
-                                                    <td class="text-center"><span class="badge badge-primary">{{ x.tipo }}</span></td>
-                                                {% elif x.tipo == 'xls' %}
-                                                    <td class="text-center"><span class="badge badge-warning">{{ x.tipo }}</span></td>
-                                                {% elif x.tipo == 'xml' %}
-                                                    <td class="text-center"><span class="badge badge-info">{{ x.tipo }}</span></td>
+                                                {% if x.source == 'json' %}
+                                                    <td class="text-center"><span class="badge badge-success">{{ x.source }}</span></td>
+                                                {% elif x.source == 'pdf' %}
+                                                    <td class="text-center"><span class="badge badge-primary">{{ x.source }}</span></td>
+                                                {% elif x.source == 'xls' %}
+                                                    <td class="text-center"><span class="badge badge-warning">{{ x.source }}</span></td>
+                                                {% elif x.source == 'xml' %}
+                                                    <td class="text-center"><span class="badge badge-info">{{ x.source }}</span></td>
                                                 {% else %}
-                                                    <td class="text-center"><span class="badge badge-secondary">{{ x.tipo }}</span></td>
+                                                    <td class="text-center"><span class="badge badge-secondary">{{ x.source }}</span></td>
                                                 {% endif %}
                                                 <td class="text-center">
-                                                    <div class="dropdown custom-dropdown">
-                                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>
-                                                        </a>
-                                                        <div  style="background-color: #bfc9d4" class="dropdown-menu dropdown-menu" aria-labelledby="dropdownMenuLink1">
-                                                            <a {% if not x.populated %} disabled {% endif %} class="dropdown-item set-overlay" href="/populate_child/{{ x.codigo }}">Populate</a>
-<!--                                                            <a class="dropdown-item set-overlay" href="javascript:void(0);">View</a>-->
-                                                        </div>
-                                                    </div>
+                                                    <a href="/populate_child/{{ x.id }}" style="padding: 2px 8px" class="btn set-overlay btn-outline-primary">Importa</a>
+
+                                                    <!--                                                    <div class="dropdown custom-dropdown">-->
+<!--                                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+<!--                                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-horizontal"><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle><circle cx="5" cy="12" r="1"></circle></svg>-->
+<!--                                                        </a>-->
+<!--                                                        <div  style="background-color: #bfc9d4" class="dropdown-menu dropdown-menu" aria-labelledby="dropdownMenuLink1">-->
+<!--                                                            <a {% if not x.populated %} disabled {% endif %} class="dropdown-item set-overlay" href="/populate_child/{{ x.codigo }}">Populate</a>-->
+<!--&lt;!&ndash;                                                            <a class="dropdown-item set-overlay" href="javascript:void(0);">View</a>&ndash;&gt;-->
+<!--                                                        </div>-->
+<!--                                                    </div>-->
 
                                                 </td>
                                             </tr>

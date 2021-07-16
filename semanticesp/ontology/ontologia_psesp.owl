@@ -1,4 +1,4 @@
-@prefix : <https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_sesp.owl#> .
+@prefix : <https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_psesp.owl#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -7,9 +7,9 @@
 @prefix dbo: <http://dbpedia.org/ontology/> .
 @prefix dc: <http://web.resource.org/cc/> .
 @prefix schema: <http://schema.org/> .
-@prefix sesp: <https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_sesp.owl#> .
+@prefix sesp: <https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_psesp.owl#> .
 
-<https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontologia_sesp> rdf:type owl:Ontology .
+<https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontologia_psesp> rdf:type owl:Ontology .
 
 #################################################################
 #    Object Properties
@@ -23,24 +23,18 @@ sesp:isPropertyOff a rdf:Property, owl:ObjectProperty ;
 	            sesp:Trabalho ;
 	rdfs:range sesp:AreaCurso,
                sesp:CampoEstudoCurso ,
-               sesp:NomeCurso ,
 	           sesp:DescricaoCurso ,
 	           sesp:DuracaoCurso ,
 	           sesp:ModoCurso ,
-	           sesp:UrlCurso ,
 	           sesp:QualificacaoCurso ,
-	           sesp:NomeInstituicao ,
-	           sesp:LocalizacaoInstituicao ,
 	           sesp:RequisitosEntradaInstituicao ,
 	           sesp:ValorInternacionalPropina ,
 	           sesp:ValorNacionalPropina ,
 	           sesp:TituloTrabalho ,
 	           sesp:DescricaoTrabalho ,
-	           sesp:PerfilTrabalho ,
 	           sesp:RequisitosTrabalho ,
                sesp:RemuneracaoTrabalho ,
                sesp:ModoTrabalho ,
-               sesp:LocalizacaoTrabalho ,
                schema:name ,
                schema:alternateName ,
                schema:branchCode ,
@@ -65,8 +59,8 @@ sesp:isPartOff a rdf:Property, owl:ObjectProperty ;
     rdfs:label "é parte de"@pt .
 
 sesp:belongTo a rdf:Property, owl:ObjectProperty ;
-	rdfs:domain sesp:NomeInstituicao;
-	rdfs:range sesp:NomeCurso ;
+	rdfs:domain schema:CollegeOrUniversity;
+	rdfs:range sesp:Curso ;
     rdfs:label "pertence a"@pt .
 
 
@@ -84,11 +78,6 @@ sesp:CampoEstudoCurso a rdf:Property, owl:DatatypeProperty ;
 	rdfs:range xsd:string ;
 	rdfs:label "Campo de estudo do curso"@pt .
 
-sesp:NomeCurso a rdf:Property, owl:DatatypeProperty ;
-	rdfs:domain sesp:Curso ;
-	rdfs:range xsd:string ;
-	rdfs:label "Nome do curso superior"@pt .
-
 sesp:DescricaoCurso a rdf:Property, owl:DatatypeProperty ;
 	rdfs:domain sesp:Curso ;
 	rdfs:range xsd:string ;
@@ -104,23 +93,18 @@ sesp:ModoCurso a rdf:Property, owl:DatatypeProperty ;
 	rdfs:range xsd:string ;
 	rdfs:label "Modo curso (Presencial/Remoto)"@pt .
 
-sesp:UrlCurso a rdf:Property, owl:DatatypeProperty ;
-	rdfs:domain sesp:Curso ;
-	rdfs:range xsd:string ;
-    rdfs:label "URL do curso"@pt .
-
 sesp:QualificacaoCurso a rdf:Property, owl:DatatypeProperty ;
 	rdfs:domain sesp:Curso ;
 	rdfs:range xsd:string ;
 	rdfs:label "Qualificação do curso"@pt .
 
 sesp:ValorInternacionalPropina a rdf:Property, owl:DatatypeProperty ;
-	rdfs:domain sesp:Instituicao ;
+	rdfs:domain schema:CollegeOrUniversity ;
 	rdfs:range xsd:string ;
     rdfs:label "Valor da propina para alunos internacionais"@pt .
 
 sesp:ValorNacionalPropina a rdf:Property, owl:DatatypeProperty ;
-	rdfs:domain sesp:Instituicao ;
+	rdfs:domain schema:CollegeOrUniversity ;
 	rdfs:range xsd:string ;
     rdfs:label "Valor da propina para alunos nacionais"@pt .
 
@@ -133,11 +117,6 @@ sesp:DescricaoTrabalho a rdf:Property, owl:DatatypeProperty ;
 	rdfs:domain sesp:Trabalho ;
 	rdfs:range xsd:string ;
     rdfs:label "Descrição da oferta de emprego"@pt .
-
-sesp:PerfilTrabalho a rdf:Property, owl:DatatypeProperty ;
-	rdfs:domain sesp:Trabalho ;
-	rdfs:range xsd:string ;
-    rdfs:label "Perfil esperado para ocupar a vaga de emprego"@pt .
 
 sesp:RequisitosTrabalho a rdf:Property, owl:DatatypeProperty ;
 	rdfs:domain sesp:Trabalho ;
@@ -154,13 +133,9 @@ sesp:ModoTrabalho a rdf:Property, owl:DatatypeProperty ;
 	rdfs:range xsd:string ;
     rdfs:label "Modo de trabalho (remoto/presencial/ambos)"@pt .
 
-sesp:LocalizacaoTrabalho a rdf:Property, owl:DatatypeProperty ;
-	rdfs:domain sesp:Trabalho ;
-	rdfs:range xsd:string ;
-    rdfs:label "Endereço onde será efetuado o trabalho"@pt .
-
 schema:name a rdf:Property, owl:DatatypeProperty ;
-	rdfs:domain schema:CollegeOrUniversity ;
+	rdfs:domain schema:CollegeOrUniversity ,
+	              sesp:Curso ;
 	rdfs:range xsd:string ;
 	rdfs:label "Nome da Universidade ou Instituto de ensino superior"@pt .
 
@@ -176,7 +151,8 @@ schema:branchCode a rdf:Property, owl:DatatypeProperty ;
 
 schema:url a rdf:Property, owl:DatatypeProperty ;
 	rdfs:domain schema:CollegeOrUniversity ,
-	                dc:ProvenanceStatement;
+	                dc:ProvenanceStatement ,
+	              sesp:Curso ;
 	rdfs:range xsd:string ;
 	rdfs:label "URL de origem da informação"@pt .
 
@@ -206,7 +182,7 @@ schema:streetAddress a rdf:Property, owl:DatatypeProperty ;
 	rdfs:label "Nome da rua onde está localizada a Universidade ou Instituto de ensino superior"@pt .
 
 sesp:RequisitosEntradaInstituicao a rdf:Property, owl:DatatypeProperty ;
-	rdfs:domain sesp:Instituicao ;
+	rdfs:domain schema:CollegeOrUniversity ;
 	rdfs:range xsd:string ;
 	rdfs:label "Requisitos de entrada na Instituição"@pt .
 
