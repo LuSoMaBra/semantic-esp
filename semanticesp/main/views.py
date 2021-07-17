@@ -228,13 +228,19 @@ def populate_child(request, id):
                         modified = datetime.strptime(defaults['Timestamp'], '%Y-%m-%d %H:%M:%S')
                         codigodoestabelecimento = '{:0>4}'.format(defaults['codigodoestabelecimento'])
                         defaults.pop('codigodoestabelecimento')
-                        populated, c = InstituicoesdoEnsinoSuperior.objects.update_or_create(
+                        populated, c = CollegeOrUniversity.objects.update_or_create(
                             PartitionKey = partition_key,
                             RowKey = row_key,
                             provenance_statement = provenance_statement,
                             codigodoestabelecimento = codigodoestabelecimento,
                             defaults = defaults
                         )
+
+                        # FALTA CRIAR A TABELA CURSO
+                        # DEPENDE DA RASPAGEM
+                        # IMPLEMENTAR CAMPO LINKED_DATA_UNIVERSIDADE
+
+
                 elif provenance_statement.codigo == 'ClassNacionaldeareasdeeducacaoeformacao':
                     for defaults in (res.json()['d']):
                         partition_key = defaults['PartitionKey']
@@ -244,7 +250,7 @@ def populate_child(request, id):
                         defaults['Timestamp'] = (defaults['Timestamp'].split('T')[0] + ' ' + defaults['Timestamp'].split('T')[1].split('.')[0])
                         modified = datetime.strptime(defaults['Timestamp'], '%Y-%m-%d %H:%M:%S')
                         defaults['estabelecimento'] = defaults['estabelecimento'].split(' - ')[0]
-                        populated, c = ClassNacionaldeareasdeeducacaoeformacao.objects.update_or_create(
+                        populated, c = CursoCnaef.objects.update_or_create(
                             PartitionKey = partition_key,
                             RowKey = row_key,
                             provenance_statement = provenance_statement,

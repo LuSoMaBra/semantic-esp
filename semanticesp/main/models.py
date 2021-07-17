@@ -15,7 +15,7 @@ class ProvenanceStatement(models.Model):
         managed = False
         db_table = 'provenance_statement'
 
-class InstituicoesdoEnsinoSuperior(models.Model):
+class CollegeOrUniversity(models.Model):
     provenance_statement = models.ForeignKey(ProvenanceStatement, models.CASCADE, blank=True, null=True)
     PartitionKey = models.CharField(max_length=255, blank=True, null=True)
     RowKey = models.CharField(max_length=255, blank=False, null=False, primary_key=True)
@@ -34,16 +34,17 @@ class InstituicoesdoEnsinoSuperior(models.Model):
     fax = models.CharField(max_length=255, blank=True, null=True)
     codigodependede = models.CharField(max_length=255, blank=True, null=True)
     dependede = models.CharField(max_length=255, blank=True, null=True)
+    link_open_data = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'instituicoes_do_ensino_superior'
+        db_table = 'college_or_university'
         unique_together = ('codigodoestabelecimento')
         unique_together = ('provenance_statement', 'PartitionKey', 'RowKey')
 
 
 
-class ClassNacionaldeareasdeeducacaoeformacao(models.Model):
+class CursoCnaef(models.Model):
     provenance_statement = models.ForeignKey(ProvenanceStatement, models.CASCADE, blank=True, null=True)
     PartitionKey = models.CharField(max_length=255, blank=True, null=True)
     RowKey = models.CharField(max_length=255, blank=False, null=False, primary_key=True)
@@ -53,58 +54,18 @@ class ClassNacionaldeareasdeeducacaoeformacao(models.Model):
     tipodeensino = models.CharField(max_length=255, blank=True, null=True)
     distrito = models.CharField(max_length=255, blank=True, null=True)
     estabelecimento = models.CharField(max_length=255, blank=True, null=True)
-    curso = models.CharField(max_length=255, blank=True, null=True)
+    nome = models.CharField(max_length=255, blank=True, null=True)
     niveldeformacao = models.CharField(max_length=255, blank=True, null=True)
     areacnaef = models.CharField(max_length=255, blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'class_nacional_de_areas_de_educacao_e_formacao'
+        db_table = 'curso_cnaef'
         unique_together = ('provenance_statement', 'PartitionKey', 'RowKey')
 
 
-class VolNegEmpresaDados(models.Model):
-    geocod = models.OneToOneField('VolNegEmpresaRegiao', models.CASCADE, db_column='geocod', primary_key=True)
-    dim_3 = models.ForeignKey('VolNegEmpresaCae', models.CASCADE, db_column='dim_3')
-    valor = models.BigIntegerField(blank=True, null=True)
-    ultimo_pref = models.SmallIntegerField()
-
-    class Meta:
-        managed = False
-        db_table = 'vol_neg_empresa_dados'
-        unique_together = (('geocod', 'dim_3', 'ultimo_pref'),)
-
-
-class VolNegEmpresaRegiao(models.Model):
-    geocod = models.CharField(primary_key=True, max_length=10)
-    geodsg = models.CharField(max_length=150, blank=True, null=True)
-    total_ultimo_pref = models.BigIntegerField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'vol_neg_empresa_regiao'
-
-
-class VolNegEmpresaCae(models.Model):
-    dim_3 = models.CharField(primary_key=True, max_length=10)
-    dim_3_t = models.CharField(max_length=255, blank=True, null=True)
-    total_ultimo_pref = models.BigIntegerField(blank=True, null=True)
-
-    class Meta:
-        managed = False
-        db_table = 'vol_neg_empresa_cae'
-
-
-class Instituicao(models.Model):
-    nome = models.CharField(max_length=255, blank=True, null=True)
-    localizacao = models.CharField(max_length=255, blank=True, null=True)
-    requisitos_entrada = models.CharField(max_length=255, blank=False, null=False)
-
-    class Meta:
-        managed = False
-        db_table = 'instituicao'
-
-class PerfilTrabalho(models.Model):
+class Trabalho(models.Model):
+    provenance_statement = models.ForeignKey(ProvenanceStatement, models.CASCADE, blank=True, null=True)
     titulo = models.CharField(max_length=250, blank=True, null=True)
     descricao = models.CharField(max_length=2048, blank=True, null=True)
     requisitos = models.CharField(max_length=255, blank=False, null=False)
@@ -112,27 +73,23 @@ class PerfilTrabalho(models.Model):
     localizacao = models.CharField(max_length=255, blank=False, null=False)
     modo = models.CharField(max_length=255, blank=False, null=False)
     area_curso = models.CharField(max_length=255, blank=False, null=False)
-    data_raspagem = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         managed = False
         db_table = 'perfil_trabalho'
 
 
-class PerfilCurso(models.Model):
-    instituicao = models.ForeignKey(Instituicao, models.CASCADE, blank=True, null=True)
+class Curso(models.Model):
+    provenance_statement = models.ForeignKey(ProvenanceStatement, models.CASCADE, blank=True, null=True)
+    curso_cnaef = models.ForeignKey(CursoCnaef, models.CASCADE, blank=True, null=True)
     nome = models.CharField(max_length=250, blank=True, null=True)
-    qualificacao = models.CharField(max_length=255, blank=False, null=False)
     url = models.CharField(max_length=255, blank=False, null=False)
     descricao = models.CharField(max_length=2048, blank=True, null=True)
-    campo_estudo = models.CharField(max_length=255, blank=False, null=False)
-    area_curso = models.CharField(max_length=255, blank=False, null=False)
-    valor_anual_nacional = models.CharField(max_length=255, blank=False, null=False)
-    valor_anual_internacional = models.CharField(max_length=255, blank=False, null=False)
+    valor_propina_nacional = models.CharField(max_length=255, blank=False, null=False)
+    valor_propina_internacional = models.CharField(max_length=255, blank=False, null=False)
     duracao = models.CharField(max_length=255, blank=False, null=False)
     modo = models.CharField(max_length=255, blank=False, null=False)
-    data_raspagem = models.DateTimeField(blank=True, null=True)
 
     class Meta:
         managed = False
-        db_table = 'perfil_curso'
+        db_table = 'curso'
