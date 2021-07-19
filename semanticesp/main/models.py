@@ -82,7 +82,6 @@ class Trabalho(models.Model):
 class Curso(models.Model):
     provenance_statement = models.ForeignKey(ProvenanceStatement, models.CASCADE, blank=True, null=True)
     curso_cnaef = models.ForeignKey(CursoCnaef, models.CASCADE, blank=True, null=True)
-    nome = models.CharField(max_length=250, blank=True, null=True)
     url = models.CharField(max_length=255, blank=False, null=False)
     descricao = models.CharField(max_length=2048, blank=True, null=True)
     valor_propina_nacional = models.CharField(max_length=255, blank=False, null=False)

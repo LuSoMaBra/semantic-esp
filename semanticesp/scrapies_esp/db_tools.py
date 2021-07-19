@@ -32,7 +32,6 @@ def testDB():
     try:
         cur = conn.cursor()
         print('Database connection opened.')
-
         cur.execute('SELECT version()')
         db_version = cur.fetchone()
         print('PostgreSQL database version:' + str(db_version))
@@ -51,7 +50,23 @@ def selectDB(connection, string_sql):
         for record in cursor:
             context.append(record)
         count = cursor.rowcount
-        print("Result ", cursor.fetchall())
+        if count:
+            print("Result ", context, cursor.fetchall())
+    except (Exception, psycopg2.Error) as error:
+        print("Error on select", error)
+    finally:
+        if cursor:
+            cursor.close()
+    return context
+
+def deleteDB(connection, tabela, criterio):
+    context = []
+    try:
+        string_sql = "delete from {} where {}".format(tabela, criterio)
+        cursor = connection.cursor()
+        cursor.execute(string_sql)
+        connection.commit()
+        print("Result ", cursor)
     except (Exception, psycopg2.Error) as error:
         print("Error on select", error)
     finally:
@@ -74,7 +89,7 @@ def insertDB(connection, tabela, fields, values):
 
     string_sql = "insert into " + tabela + fields_sql + values_sql
 
-    print(string_sql)
+    # print(string_sql)
 
     try:
         cursor = connection.cursor()

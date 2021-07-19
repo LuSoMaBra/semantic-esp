@@ -201,6 +201,24 @@ def processa_ontologia():
 
 
 def populate_child(request, id):
+
+    # from scrapies_esp import db_tools
+    # areas = db_tools.selectDB(db_tools.connectDB(), "select id, nome from curso_cnaef where estabelecimento like '{}__' and nome like '____ - {}' and niveldeformacao like 'Licenciatura%' ".format('12', 'Turismo'))
+    #
+    #
+    # # curso_cnaef_id = db_tools.selectDB(db_tools.connectDB(),
+    # #                                    # "select now()")
+    # #                                    "update provenance_statement set last_extraction = now() where id = {};".format(9) + " select * from provenance_statement where id = {}; COMMIT;".format(9))
+    # #
+    #
+    # # for x in curso_cnaef_id:
+    # for x in areas:
+    #     print(x[0])
+    #
+    # return redirect('/importa_dados')
+    #
+
+
     try:
         provenance_statement = ProvenanceStatement.objects.get(id=id)
     except:
@@ -236,10 +254,8 @@ def populate_child(request, id):
                             defaults = defaults
                         )
 
-                        # FALTA CRIAR A TABELA CURSO
                         # DEPENDE DA RASPAGEM
                         # IMPLEMENTAR CAMPO LINKED_DATA_UNIVERSIDADE
-
 
                 elif provenance_statement.codigo == 'ClassNacionaldeareasdeeducacaoeformacao':
                     for defaults in (res.json()['d']):
@@ -250,6 +266,8 @@ def populate_child(request, id):
                         defaults['Timestamp'] = (defaults['Timestamp'].split('T')[0] + ' ' + defaults['Timestamp'].split('T')[1].split('.')[0])
                         modified = datetime.strptime(defaults['Timestamp'], '%Y-%m-%d %H:%M:%S')
                         defaults['estabelecimento'] = defaults['estabelecimento'].split(' - ')[0]
+                        defaults['nome'] = defaults['curso']
+                        defaults.pop('curso')
                         populated, c = CursoCnaef.objects.update_or_create(
                             PartitionKey = partition_key,
                             RowKey = row_key,
@@ -258,6 +276,13 @@ def populate_child(request, id):
                         )
                 else:
                     pass
+
+            elif (res) and (provenance_statement.source == 'html'):
+                if provenance_statement.codigo == 'UTAD_spider':
+                    os.system('scrapy runspider scrapies_esp/scrapy_curso.py')
+                    modified = provenance_statement.created
+                    populated = True
+
             elif (res) and (provenance_statement.source == 'xls'):
 
                 file = open('tmp_excel_work.xls', 'wb')
