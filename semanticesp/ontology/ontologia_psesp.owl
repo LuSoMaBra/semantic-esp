@@ -19,7 +19,6 @@ psesp:isPropertyOff a rdf:Property, owl:ObjectProperty ;
 	rdfs:domain
                 schema:Course,
                 schema:CollegeOrUniversity,
-                schema:PostalAddress,
                dcterms:ProvenanceStatement,
                  psesp:Trabalho ;
     rdfs:range
