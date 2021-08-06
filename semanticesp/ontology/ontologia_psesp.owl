@@ -1,3 +1,4 @@
+
 @prefix : <https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_psesp.owl#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -7,8 +8,6 @@
 @prefix dbo: <http://dbpedia.org/ontology/> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix schema: <http://schema.org/> .
-@prefix aiiso: <http://purl.org/vocab/aiiso/schema#> .
-@prefix foaf: <http://xmlns.com/foaf/spec/> .
 @prefix psesp: <https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_psesp.owl#> .
 
 <https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontologia_psesp> rdf:type owl:Ontology .
@@ -17,176 +16,141 @@
 #    Object Properties
 #################################################################
 
-dcTerms:isPartOf a rdf:Property, owl:ObjectProperty
-	rdfs:domain aiiso:Programme ;
-	rdfs:range aiiso:Institution  ;
+schema:provider a rdf:Property, owl:ObjectProperty ;
+	rdfs:domain schema:EducationalOcuppationalProgram ;
+	rdfs:range schema:CollegeOrUniversity .
 
-schema:educationRequirements a rdf:Property, owl:ObjectProperty
+schema:educationRequirements a rdf:Property, owl:ObjectProperty ;
 	rdfs:domain schema:JobPosting ;
-	rdfs:range aiiso:Programme  ;
+	rdfs:range schema:EducationalOcuppationalProgram  .
 
-dcterms:isPartOf a rdf:Property, owl:ObjectProperty ;
-	rdfs:domain aiiso:Institution ,
-	           aiiso:Programme ,
+schema:provider a rdf:Property, owl:ObjectProperty ;
+	rdfs:domain schema:CollegeOrUniversity ,
+	           schema:EducationalOcuppationalProgram ,
 	           schema:JobPosting ;
-	rdfs:range dcterms:ProvenanceStatement ;
+	rdfs:range dcterms:ProvenanceStatement .
 
-schema:sameAs a rdf:Property, owl:ObjectProperty ;   ******************
-	rdfs:domain psesp:RequisitosTrabalho ;
-	rdfs:range psesp:AreaCurso ;
-    rdfs:label "é igual a"@pt .
-
-dcTerms:isPartOf a rdf:Property, owl:ObjectProperty
-	rdfs:domain aiiso:Institution ;
-	rdfs:range schema:PostalAddress  ;
+schema:address a rdf:Property, owl:ObjectProperty ;
+	rdfs:domain schema:CollegeOrUniversity ;
+	rdfs:range schema:PostalAddress  .
 
 
 #################################################################
 #    Data properties
 #################################################################
 
-SCHEMA:name a rdf:Property, owl:DatatypeProperty ;
-	rdfs:domain aiiso:Programme,
-	            aiiso:Institution ;
-	rdfs:range xsd:string ;
+schema:name a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain schema:EducationalOcuppationalProgram,
+	            schema:CollegeOrUniversity ;
+	rdfs:range xsd:string .
 
 schema:description a rdf:Property, owl:DatatypeProperty ;
-	rdfs:domain aiiso:Programme,
+	rdfs:domain schema:EducationalOcuppationalProgram,
 	            schema:JobPosting ;
-	rdfs:range xsd:string ;
-	rdfs:label "Descrição"@pt .
+	rdfs:range xsd:string .
 
-schema:CourseMode a rdf:Property, owl:DatatypeProperty ;
-	rdfs:domain aiiso:Programme ;
-	rdfs:range xsd:string ;
+schema:educationalProgramMode a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain schema:EducationalOcuppationalProgram ;
+	rdfs:range xsd:string .
 
 schema:title a rdf:Property, owl:DatatypeProperty ;
-	rdfs:domain schema:JobPosting ;
-	rdfs:range xsd:string ;
+	rdfs:domain schema:JobPosting ,
+	           dcterms:ProvenanceStatement ;
+	rdfs:range xsd:string .
 
 schema:branchCode a rdf:Property, owl:DatatypeProperty ;
-	rdfs:domain aiiso:Institution ;
-	rdfs:range xsd:string ;
-	rdfs:label "Código da Universidade ou Instituto de ensino superior"@pt .
+	rdfs:domain schema:CollegeOrUniversity ;
+	rdfs:range xsd:string .
 
 schema:url a rdf:Property, owl:DatatypeProperty ;
-	rdfs:domain aiiso:Institution ,
-	            aiiso:Programme ,
+	rdfs:domain schema:CollegeOrUniversity ,
+	            schema:EducationalOcuppationalProgram ,
               dcterms:ProvenanceStatement ;
-	rdfs:range xsd:string ;
-	rdfs:label "URL"@pt .
+	rdfs:range xsd:string .
 
 schema:streetAddress a rdf:Property, owl:DatatypeProperty ;
 	rdfs:domain schema:PostalAddress ;
-	rdfs:range xsd:string ;
-	rdfs:label "Morada"@pt .
+	rdfs:range xsd:string .
 
 schema:addressLocality a rdf:Property, owl:DatatypeProperty ;
 	rdfs:domain schema:PostalAddress ;
-	rdfs:range xsd:string ;
-	rdfs:label "Concelho"@pt .
+	rdfs:range xsd:string .
 
 schema:addressRegion a rdf:Property, owl:DatatypeProperty ;
 	rdfs:domain schema:PostalAddress ;
-	rdfs:range xsd:string ;
-	rdfs:label "Distrito"@pt .
+	rdfs:range xsd:string .
 
 schema:postalCode a rdf:Property, owl:DatatypeProperty ;
 	rdfs:domain schema:PostalAddress ;
-	rdfs:range xsd:string ;
-	rdfs:label "Código postal"@pt .
-
-dcterms:title a rdf:Property, owl:DatatypeProperty ;
-	rdfs:domain dcterms:ProvenanceStatement ;
-	rdfs:range xsd:string ;
-    rdfs:label "Nome de onde provém a informação"@pt .
+	rdfs:range xsd:string .
 
 dcterms:creator a rdf:Property, owl:DatatypeProperty ;
 	rdfs:domain dcterms:ProvenanceStatement ;
-	rdfs:range xsd:string ;
-    rdfs:label "Nome do criador da informação"@pt .
+	rdfs:range xsd:string .
 
 dcterms:created a rdf:Property, owl:DatatypeProperty ;
 	rdfs:domain dcterms:ProvenanceStatement ;
-	rdfs:range xsd:datetime ;
-    rdfs:label "Data e hora da criação da informação"@pt .
+	rdfs:range xsd:datetime .
 
 dcterms:modified a rdf:Property, owl:DatatypeProperty ;
 	rdfs:domain dcterms:ProvenanceStatement ;
-	rdfs:range xsd:datetime ;
-    rdfs:label "Data e hora da última modificação da informação"@pt .
+	rdfs:range xsd:datetime .
 
-psesp:AreaCNAEF a rdf:Property, owl:DatatypeProperty ;   COLOCAR EM INGLÊS (PROPRIEDADE COMEÇA COM LETRA MINÚSCULA
-	rdfs:domain aiiso:Programme ;
-	rdfs:range xsd:string ;
-	rdfs:label "Área profissional do curso"@pt .
+psesp:cnaefArea a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain schema:EducationalOcuppationalProgram ;
+	rdfs:range xsd:string .
 
-psesp:AreaCurso a rdf:Property, owl:DatatypeProperty ;
-	rdfs:domain aiiso:Programme ;
-	rdfs:range xsd:string ;
-	rdfs:label "Área de estudo do curso"@pt .
+psesp:programmeArea a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain schema:EducationalOcuppationalProgram ;
+	rdfs:range xsd:string .
 
-psesp:DuracaoCurso a rdf:Property, owl:DatatypeProperty ;
-	rdfs:domain aiiso:Programme ;
-	rdfs:range xsd:string ;
-	rdfs:label "Duração do curso (anos)"@pt .
+schema:termDuration a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain schema:EducationalOcuppationalProgram ;
+	rdfs:range xsd:string .
 
-psesp:NivelDeFormacao a rdf:Property, owl:DatatypeProperty ;    PROCURAR DEGREE
-	rdfs:domain aiiso:Programme ;
-	rdfs:range xsd:string ;
-	rdfs:label "Qualificação do curso"@pt .
+schema:educationalCredentialAwarded a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain schema:EducationalOcuppationalProgram ;
+	rdfs:range xsd:string .
 
-psesp:ValorPropinaInternacional a rdf:Property, owl:DatatypeProperty ;
-	rdfs:domain aiiso:Institution ;
-	rdfs:range xsd:string ;
-    rdfs:label "Valor da propina para alunos internacionais"@pt .
+psesp:internationalRegistrationFee a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain schema:CollegeOrUniversity ;
+	rdfs:range xsd:string .
 
-psesp:ValorPropinaNacional a rdf:Property, owl:DatatypeProperty ;
-	rdfs:domain aiiso:Institution ;
-	rdfs:range xsd:string ;
-    rdfs:label "Valor da propina para alunos nacionais"@pt .
+psesp:nationalRegistrationFee a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain schema:CollegeOrUniversity ;
+	rdfs:range xsd:string .
 
 schema:qualifications a rdf:Property, owl:DatatypeProperty ;
 	rdfs:domain schema:JobPosting ;
-	rdfs:range xsd:string ;
-    rdfs:label "Requisitos acadêmicos para ocupar a vaga de emprego (Área do Curso)"@pt .
+	rdfs:range xsd:string .
 
 schema:baseSalary a rdf:Property, owl:DatatypeProperty ;
 	rdfs:domain schema:JobPosting ;
-	rdfs:range xsd:string ;
-    rdfs:label "Remuneração oferecidade pela oferta de emprego"@pt .
+	rdfs:range xsd:string .
 
 schema:employmentType a rdf:Property, owl:DatatypeProperty ;
 	rdfs:domain schema:JobPosting ;
-	rdfs:range xsd:string ;
-    rdfs:label "Tipo de trabalho (remoto/presencial/part time/full time)"@pt .
+	rdfs:range xsd:string .
 
 psesp:lastExtraction a rdf:Property, owl:DatatypeProperty ;
 	rdfs:domain dcterms:ProvenanceStatement ;
-	rdfs:range xsd:datetime ;
-    rdfs:label "Data e hora da extração da informação"@pt .
+	rdfs:range xsd:datetime .
 
 schema:fileFormat a rdf:Property, owl:DatatypeProperty ;
 	rdfs:domain dcterms:ProvenanceStatement ;
-	rdfs:range xsd:string ;
-    rdfs:label "Formato da informação"@pt .
+	rdfs:range xsd:string .
 
 
 #################################################################
 #    Classes
 #################################################################
 
-aiiso:Programme rdf:type owl:Class ;
-    rdfs:label "Curso Superior"@pt .
+schema:EducationalOcuppationalProgram rdf:type owl:Class .
 
-aiiso:Institution rdf:type owl:Class ;
-    rdfs:label "Instituição de Curso Superior"@pt .
+schema:CollegeOrUniversity rdf:type owl:Class .
 
-dcterms:ProvenanceStatement rdf:type owl:Class ;
-    rdfs:label "Provedor da Informação"@pt .
+dcterms:ProvenanceStatement rdf:type owl:Class .
 
-schema:JobPosting rdf:type owl:Class ;
-    rdfs:label "Oferta de Trabalho"@pt .
+schema:JobPosting rdf:type owl:Class .
 
-schema:PostalAddress rdf:type owl:Class ;
-    rdfs:label "ENDDEREÇO"@pt .
+schema:PostalAddress rdf:type owl:Class .
