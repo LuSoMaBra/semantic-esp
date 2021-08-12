@@ -51,39 +51,31 @@ def sparql_ontologia(request):
 
 def serializa_ontologia(request):
     try:
-        g, gc = processa_ontologia()
+        g = processa_ontologia()
 
-        curso_serializado = {}
-        curso_serializado['n3'] = g.serialize(format='n3').decode('utf-8')
-        curso_serializado['nt'] = g.serialize(format='nt').decode('utf-8')
-        curso_serializado['prettyxml'] = g.serialize(format='pretty-xml').decode('utf-8')
-        curso_serializado['trig'] = g.serialize(format='trig').decode('utf-8')
-        curso_serializado['turtle'] = g.serialize(format='turtle').decode('utf-8')
-        curso_serializado['xml'] = g.serialize(format='xml').decode('utf-8')
-
-        job_serializado = {}
-        job_serializado['n3'] = gc.serialize(format='n3').decode('utf-8')
-        job_serializado['nt'] = gc.serialize(format='nt').decode('utf-8')
-        job_serializado['prettyxml'] = gc.serialize(format='pretty-xml').decode('utf-8')
-        job_serializado['trig'] = gc.serialize(format='trig').decode('utf-8')
-        job_serializado['turtle'] = gc.serialize(format='turtle').decode('utf-8')
-        job_serializado['xml'] = gc.serialize(format='xml').decode('utf-8')
+        ontologia_serializada = {}
+        ontologia_serializada['n3'] = g.serialize(format='n3').decode('utf-8')
+        ontologia_serializada['nt'] = g.serialize(format='nt').decode('utf-8')
+        ontologia_serializada['prettyxml'] = g.serialize(format='pretty-xml').decode('utf-8')
+        ontologia_serializada['trig'] = g.serialize(format='trig').decode('utf-8')
+        ontologia_serializada['turtle'] = g.serialize(format='turtle').decode('utf-8')
+        ontologia_serializada['xml'] = g.serialize(format='xml').decode('utf-8')
 
         context = {
-            'job_serializado': job_serializado,
-            'curso_serializado': curso_serializado,
+            'ontologia_serializada': ontologia_serializada,
         }
 
         messages.success(request, 'Serialização da ontologia executada com sucesso.'.format(codigo))
 
     except Exception as error:
+        raise
         messages.error(request, 'Ocorreu um erro ao serializar a ontologia. Operação não efetuada.')
 
     return render(request, 'serializa_ontologia.html', context)
 
 def run_sparql_ontologia(request):
     try:
-        g, gc = processa_ontologia()
+        g = processa_ontologia()
         sparql_query = str(request.POST.get('sparql_text', '').strip())
         run_on = request.POST.get('run_on', '')
 
@@ -122,81 +114,63 @@ def processa_ontologia():
 
     myOntology = Namespace('https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#')
 
-    equivalencia_curso = {'NomeCurso': 'nome',
-                          'RequisitosEntradaInstituicao': 'instituicao__requisitos_entrada',
-                          'QualificacaoCurso': 'qualificacao',
-                          'ValorInternacionalCurso': 'valor_anual_internacional',
-                          'NomeInstituicao': 'instituicao__nome',
-                          'DescricaoCurso':'descricao',
-                          'AreaCurso': 'area_curso',
-                          'ModoCurso': 'modo',
-                          'UrlCurso': 'url',
-                          'CampoEstudoCurso': 'campo_estudo',
-                          'LocalizacaoInstituicao': 'instituicao__localizacao',
-                          'DuracaoCurso': 'duracao',
-                          'ValorNacionalCurso': 'valor_anual_nacional',
-                          }
-
-    equivalencia_job = {'LocalizacaoTrabalho': 'localizacao',
-                        'DescricaoTrabalho': 'descricao',
-                        'TituloTrabalho': 'titulo',
-                        'RequisitosTrabalho': 'requisitos',
-                        'RemuneracaoTrabalho': 'remuneracao',
-                        'ModoTrabalho': 'modo'
-                        }
-
     # CURSO
     g = rdflib.Graph()
-    ontologia = g.parse('ontology/Ontologia_Curso.rdf')
+    ontologia = g.parse('ontology/ontologia_psesp_rdf.owl')
     g.bind('myOntology', myOntology)
-    perfil_curso = PerfilCurso.objects.all()
-    last_data_raspagem = perfil_curso.distinct('data_raspagem').order_by('-data_raspagem').first().data_raspagem
-    if last_data_raspagem:
-        perfil_curso = perfil_curso.filter(data_raspagem=last_data_raspagem)
+    curso = Curso.objects.all()
+    trabalho = Trabalho.objects.all()
+    last_extraction = curso.distinct('provenance_statement__last_extraction').order_by('-provenance_statement__last_extraction').first().provenance_statement.last_extraction
+    last_extraction_trabalho = trabalho.distinct('provenance_statement__last_extraction').order_by('-provenance_statement__last_extraction').first().provenance_statement.last_extraction
+    # if last_extraction:
+    #     curso = curso.filter(provenance_statement__last_extraction__gte=last_extraction)
 
-    for x in perfil_curso:        
-        g.add((myOntology['NomeCurso'], OWL.NamedIndividual, Literal(x.nome)))
-        g.add((myOntology['RequisitosEntradaInstituicao'], OWL.NamedIndividual, Literal(x.instituicao.requisitos_entrada)))
-        g.add((myOntology['QualificacaoCurso'], OWL.NamedIndividual, Literal(x.qualificacao)))
-        g.add((myOntology['ValorInternacionalCurso'], OWL.NamedIndividual, Literal(x.valor_anual_internacional)))
-        g.add((myOntology['NomeInstituicao'], OWL.NamedIndividual, Literal(x.instituicao.nome)))
-        g.add((myOntology['DescricaoCurso'], OWL.NamedIndividual, Literal(x.descricao)))
-        g.add((myOntology['AreaCurso'], OWL.NamedIndividual, Literal(x.area_curso)))
-        g.add((myOntology['ModoCurso'], OWL.NamedIndividual, Literal(x.modo)))
-        g.add((myOntology['UrlCurso'], OWL.NamedIndividual, Literal(x.url)))
-        g.add((myOntology['CampoEstudoCurso'], OWL.NamedIndividual, Literal(x.campo_estudo)))
-        g.add((myOntology['LocalizacaoInstituicao'], OWL.NamedIndividual, Literal(x.instituicao.localizacao)))
-        g.add((myOntology['DuracaoCurso'], OWL.NamedIndividual, Literal(x.duracao)))
-        g.add((myOntology['ValorNacionalCurso'], OWL.NamedIndividual, Literal(x.valor_anual_nacional)))
+    for x in curso:
+        print(x.curso_cnaef)
 
-    # perfil_curso = list(g.triples((myOntology['NomeCurso'], OWL.NamedIndividual, None)))
-    # for (sub, pred, obj) in perfil_curso:
-    #     print((sub, pred, obj))
+    for x in curso:
+        # trabalho
+        trabalho = trabalho.filter(provenance_statement__last_extraction__gte=last_extraction_trabalho, area_curso=x.curso_cnaef.areacnaef)
+        for y in trabalho:
+            g.add((myOntology['title'], OWL.NamedIndividual, Literal(y.titulo)))
+            g.add((myOntology['description'], OWL.NamedIndividual, Literal(y.descricao)))
+            g.add((myOntology['baseSalary'], OWL.NamedIndividual, Literal(y.remuneracao)))
+            g.add((myOntology['employmentType'], OWL.NamedIndividual, Literal(y.modo)))
+            g.add((myOntology['qualifications'], OWL.NamedIndividual, Literal(y.area_curso)))
 
-    # JOB
-    gc = rdflib.Graph()
-    ontologia = gc.parse('ontology/Ontologia_Trabalho.rdf')
+        # curso
+        g.add((myOntology['name'], OWL.NamedIndividual, Literal(x.curso_cnaef.nome)))
+        g.add((myOntology['name'], OWL.NamedIndividual, Literal(x.curso_cnaef.college_or_university.nome)))
+        g.add((myOntology['description'], OWL.NamedIndividual, Literal(x.descricao)))
+        g.add((myOntology['educationalProgramMode'], OWL.NamedIndividual, Literal(x.modo)))
+        g.add((myOntology['url'], OWL.NamedIndividual, Literal(x.url)))
+        g.add((myOntology['termDuration'], OWL.NamedIndividual, Literal(x.duracao)))
+        g.add((myOntology['educationalCredentialAwarded'], OWL.NamedIndividual, Literal(x.curso_cnaef.niveldeformacao)))
+        g.add((myOntology['programmeArea'], OWL.NamedIndividual, Literal(x.curso_cnaef.areacnaef)))
+        g.add((myOntology['internationalRegistrationFee'], OWL.NamedIndividual, Literal(x.valor_propina_internacional)))
+        g.add((myOntology['nationalRegistrationFee'], OWL.NamedIndividual, Literal(x.valor_propina_nacional)))
 
-    gc.bind('myOntology', myOntology)
+        # provenance_statement
+        g.add((myOntology['title'], OWL.NamedIndividual, Literal(x.provenance_statement.title)))
+        g.add((myOntology['url'], OWL.NamedIndividual, Literal(x.provenance_statement.url)))
+        g.add((myOntology['creator'], OWL.NamedIndividual, Literal(x.provenance_statement.creator)))
+        g.add((myOntology['created'], OWL.NamedIndividual, Literal(x.provenance_statement.created)))
+        g.add((myOntology['modified'], OWL.NamedIndividual, Literal(x.provenance_statement.modified)))
+        g.add((myOntology['fileFormat'], OWL.NamedIndividual, Literal(x.provenance_statement.source)))
+        g.add((myOntology['lastExtraction'], OWL.NamedIndividual, Literal(x.provenance_statement.last_extraction)))
 
-    perfil_job = PerfilTrabalho.objects.all()
-    last_data_raspagem = perfil_job.distinct('data_raspagem').order_by('-data_raspagem').first().data_raspagem
-    if last_data_raspagem:
-        perfil_job = perfil_job.filter(data_raspagem=last_data_raspagem)
+        # college_or_university
+        g.add((myOntology['branchCode'], OWL.NamedIndividual, Literal(x.curso_cnaef.college_or_university.codigodoestabelecimento)))
+        g.add((myOntology['streetAddress'], OWL.NamedIndividual, Literal(x.curso_cnaef.college_or_university.morada)))
+        g.add((myOntology['addressLocality'], OWL.NamedIndividual, Literal(x.curso_cnaef.college_or_university.concelho)))
+        g.add((myOntology['addressRegion'], OWL.NamedIndividual, Literal(x.curso_cnaef.college_or_university.distrito)))
+        g.add((myOntology['postalCode'], OWL.NamedIndividual, Literal(x.curso_cnaef.college_or_university.codigopostal)))
 
-    for x in perfil_job:
-        gc.add((myOntology['LocalizacaoTrabalho'], OWL.NamedIndividual, Literal(x.localizacao)))
-        gc.add((myOntology['DescricaoTrabalho'], OWL.NamedIndividual, Literal(x.descricao)))
-        gc.add((myOntology['TituloTrabalho'], OWL.NamedIndividual, Literal(x.titulo)))
-        gc.add((myOntology['RequisitosTrabalho'], OWL.NamedIndividual, Literal(x.requisitos)))
-        gc.add((myOntology['RemuneracaoTrabalho'], OWL.NamedIndividual, Literal(x.remuneracao)))
-        gc.add((myOntology['ModoTrabalho'], OWL.NamedIndividual, Literal(x.modo)))
-
-    # perfil_job = list(gc.triples((myOntology['NomeCurso'], OWL.NamedIndividual, None)))
-    # for (sub, pred, obj) in perfil_job:
-    #     print((sub, pred, obj))
-
-    return g, gc
+    # # cursos = list(gc.triples((myOntology['name'], OWL.NamedIndividual, None)))
+    # # for (sub, pred, obj) in cursos:
+    # #     print((sub, pred, obj))
+    # 
+    return g
 
 def populate_child(request, id):
 
@@ -216,7 +190,6 @@ def populate_child(request, id):
     # return redirect('/importa_dados')
     #
 
-
     try:
         provenance_statement = ProvenanceStatement.objects.get(id=id)
     except:
@@ -230,7 +203,7 @@ def populate_child(request, id):
             res = requests.get(provenance_statement.url)
         except Exception as error:
             res = None
-            messages.error(request, 'Ocorreu um erro ao efetuar a requisiçao do arquivo {}. Operação não efetuada.'.format(codigo))
+            messages.error(request, 'Ocorreu um erro ao efetuar a requisiçao do arquivo {}. Operação não efetuada.'.format(provenance_statement.codigo))
             messages.info(request, 'Erro: {}'.format(error))
         try:
             if (res) and (provenance_statement.source == 'json'):
@@ -278,6 +251,11 @@ def populate_child(request, id):
             elif (res) and (provenance_statement.source == 'html'):
                 if provenance_statement.codigo == 'UTAD_spider':
                     os.system('scrapy runspider scrapies_esp/scrapy_curso.py')
+                    modified = provenance_statement.created
+                    populated = True
+
+                if provenance_statement.codigo == 'net-empregos':
+                    os.system('scrapy runspider scrapies_esp/scrapy_job_net_empregos.py')
                     modified = provenance_statement.created
                     populated = True
 

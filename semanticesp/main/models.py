@@ -61,13 +61,12 @@ class CursoCnaef(models.Model):
     class Meta:
         managed = False
         db_table = 'curso_cnaef'
-        unique_together = ('provenance_statement', 'PartitionKey', 'RowKey')
 
 
 class Trabalho(models.Model):
     provenance_statement = models.ForeignKey(ProvenanceStatement, models.CASCADE, blank=True, null=True)
     titulo = models.CharField(max_length=250, blank=True, null=True)
-    descricao = models.CharField(max_length=2048, blank=True, null=True)
+    descricao = models.CharField(max_length=4096, blank=True, null=True)
     requisitos = models.CharField(max_length=255, blank=False, null=False)
     remuneracao = models.CharField(max_length=255, blank=False, null=False)
     localizacao = models.CharField(max_length=255, blank=False, null=False)
@@ -76,7 +75,7 @@ class Trabalho(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'perfil_trabalho'
+        db_table = 'trabalho'
 
 
 class Curso(models.Model):

@@ -13,10 +13,7 @@
                     <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
                         <div class="widget-content-area row ">
                             <div class="widget-one col text-center">
-                                <h4>Ontologia de Curso</h4>
-                                <div class="text-right">
-                                    <a type="button" class="btn btn-outline-primary btnOntologia mb-2 mr-2">Altera para Ontologia de Trabalho</a>
-                                </div>
+                                <h4>Ontologia OP</h4>
                             </div>
                         </div>
                     </div>
@@ -39,52 +36,12 @@
                             <div class="widget-header">
                                 <div class="row">
                                     <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                        <h4>Formato RDF</h4>
+                                        <h4>Formato Turtle</h4>
                                     </div>
                                 </div>
                             </div>
                             <div class="widget-content widget-content-area" style="height: 571px;">
-                                <iframe src="{% static 'Ontologia_Curso.txt' %}" frameborder="0" scrolling="yes" height="530" width="100%"></iframe>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div id="visualiza_ontologia_trabalho" class="ml-2 mr-2 mt-4 row">
-                    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
-                        <div class="widget-content-area row">
-                            <div class="widget-one col text-center">
-                                <h4>Ontologia de Trabalho</h4>
-                                <div class="text-right">
-                                    <a type="button" class="btn btn-outline-primary btnOntologia curso mb-2 mr-2">Altera paraOntologia de Curso</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12" style="margin-bottom:24px;">
-                        <div class="statbox widget box box-shadow">
-                            <div class="widget-header">
-                                <div class="row">
-                                    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                        <h4>Formato Gráfico</h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="widget-content widget-content-area" style="height: 571px;">
-                                <img src="{% static 'ontologia_trabalho.png' %}"  height="100%" width="100%">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12" style="margin-bottom:24px;">
-                        <div class="statbox widget box box-shadow">
-                            <div class="widget-header">
-                                <div class="row">
-                                    <div class="col-xl-12 col-md-12 col-sm-12 col-12">
-                                        <h4>Formato RDF</h4>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="widget-content widget-content-area" style="height: 571px;">
-                                <iframe src="{% static 'Ontologia_Trabalho.txt' %}" frameborder="0" scrolling="yes" height="530" width="100%"></iframe>
+                                <iframe src="{% static 'ontologia_psesp.turtle.txt' %}" frameborder="0" scrolling="yes" height="530" width="100%"></iframe>
                             </div>
                         </div>
                     </div>
@@ -106,20 +63,6 @@
 {% block script %}
     <script type="text/javascript">
 
-        $('#visualiza_ontologia_trabalho').fadeOut();
-
-        $('.close-modal').on('click', function (e) {
-            $('.modal').modal("hide");
-        });
-        $('.btnOntologia').on('click', function (e) {
-            if ( $(this).hasClass('curso') ) {
-                $('#visualiza_ontologia_trabalho').hide();
-                $('#visualiza_ontologia_curso').fadeIn();
-            } else {
-                $('#visualiza_ontologia_curso').hide();
-                $('#visualiza_ontologia_trabalho').fadeIn();
-            };
-        });
     </script>
 {% endblock %}
 

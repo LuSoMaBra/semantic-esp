@@ -46,6 +46,8 @@ class NETEMPREGOSpider(scrapy.Spider):
 
     data_raspagem = datetime.datetime.now()
 
+    provenance_statement_id = 10
+
     fields = [
         'titulo',
         'descricao',
@@ -53,19 +55,19 @@ class NETEMPREGOSpider(scrapy.Spider):
         'remuneracao',
         'localizacao',
         'modo',
-        'data_raspagem',
-        'area_curso'
+        'area_curso',
+        'provenance_statement_id'
     ]
 
     # link base: "Formação Superior", "Tempo Integral"
     link_base = 'https://www.net-empregos.com/pesquisa-empregos.asp?chaves=Forma%E7%E3o+Superior&cidade=&categoria={}&zona=0&tipo=1'
 
-    areas = selectDB(connectDB(), 'select area_curso from perfil_curso')
+    areas = selectDB(connectDB(), 'select cn.areacnaef from curso c, curso_cnaef cn where c.curso_cnaef_id = cn.id')
 
     start_urls = []
     all_areas_list = []
     for x in areas:
-        y = x[0].split(' ')
+        y = x[0].split(' - ')[1].split(' ')
         base_world = []
         for i in y:
             if len(i) > 3:
@@ -117,7 +119,7 @@ class NETEMPREGOSpider(scrapy.Spider):
                 _y = extract_list_with_css(y, '::text')
                 descricao = ''
                 for k in _y:
-                    descricao = descricao + k.get().lstrip().rstrip() + ' '
+                    descricao = descricao + (k.get().lstrip().rstrip() + ' ').replace("'", "")
 
             localizacao = 'Veja em Descrição'
             modo = 'Veja em Descrição'
@@ -129,6 +131,6 @@ class NETEMPREGOSpider(scrapy.Spider):
             if titulo:
                 for key, value in self.area_dict.items():
                     if categoria in value:
-                        requisitos = key
-                        area_curso = requisitos
-                        insertDB(connection=connectDB(), tabela='perfil_trabalho', fields=self.fields, values=[titulo, descricao, requisitos, remuneracao, localizacao, modo, self.data_raspagem, area_curso])
+                        area_curso = key
+                        requisitos = area_curso.split(' - ')[1]
+                        insertDB(connection=connectDB(), tabela='trabalho', fields=self.fields, values=[titulo, descricao, requisitos, remuneracao, localizacao, modo, area_curso, self.provenance_statement_id])
