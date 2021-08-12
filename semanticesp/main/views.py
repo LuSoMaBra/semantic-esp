@@ -118,7 +118,6 @@ def run_sparql_ontologia(request):
 
     return render(request, 'sparql_ontologia.html', context)
 
-
 def processa_ontologia():
 
     myOntology = Namespace('https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology#')
@@ -198,7 +197,6 @@ def processa_ontologia():
     #     print((sub, pred, obj))
 
     return g, gc
-
 
 def populate_child(request, id):
 
