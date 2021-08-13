@@ -46,7 +46,7 @@ class NETEMPREGOSpider(scrapy.Spider):
 
     data_raspagem = datetime.datetime.now()
 
-    provenance_statement_id = 10
+    provenance_statement_id = 4
 
     fields = [
         'titulo',

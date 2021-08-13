@@ -65,10 +65,9 @@ def serializa_ontologia(request):
             'ontologia_serializada': ontologia_serializada,
         }
 
-        messages.success(request, 'Serialização da ontologia executada com sucesso.'.format(codigo))
+        messages.success(request, 'Serialização da ontologia executada com sucesso.')
 
     except Exception as error:
-        raise
         messages.error(request, 'Ocorreu um erro ao serializar a ontologia. Operação não efetuada.')
 
     return render(request, 'serializa_ontologia.html', context)
@@ -77,21 +76,19 @@ def run_sparql_ontologia(request):
     try:
         g = processa_ontologia()
         sparql_query = str(request.POST.get('sparql_text', '').strip())
-        run_on = request.POST.get('run_on', '')
-
         try:
-            if run_on == 'curso':
-                resultado = g.query(sparql_query)
-            elif run_on == 'job':
-                resultado = gc.query(sparql_query)
-            else:
-                resultado = None
+            resultado = g.query(sparql_query)
+            # resultado = g.query('SELECT ?name WHERE { ?label owl:NamedIndividual ?name }')
+            # resultado = g.query('SELECT ?x ?label WHERE { ?x owl:NamedIndividual ?label }')
         except:
             resultado = None
+
+        print('resultado', resultado)
 
         sparql_resultado = []
         if resultado:
             for x in resultado:
+                print(x)
                 sparql_resultado.append(str(x) + '\n')
 
         if not sparql_resultado:
@@ -102,8 +99,7 @@ def run_sparql_ontologia(request):
             'sparql_query': sparql_query,
             'sparql_resultado': sparql_resultado,
         }
-
-        messages.success(request, 'Query executada com sucesso.'.format(codigo))
+        messages.success(request, 'Query executada com sucesso.')
 
     except Exception as error:
         messages.error(request, 'Ocorreu um erro ao executar a query. Operação não efetuada.')
@@ -118,15 +114,12 @@ def processa_ontologia():
     g = rdflib.Graph()
     ontologia = g.parse('ontology/ontologia_psesp_rdf.owl')
     g.bind('myOntology', myOntology)
-    curso = Curso.objects.all()
-    trabalho = Trabalho.objects.all()
+    curso = Curso.objects.select_related(None).all()
+    trabalho = Trabalho.objects.select_related(None).all()
     last_extraction = curso.distinct('provenance_statement__last_extraction').order_by('-provenance_statement__last_extraction').first().provenance_statement.last_extraction
     last_extraction_trabalho = trabalho.distinct('provenance_statement__last_extraction').order_by('-provenance_statement__last_extraction').first().provenance_statement.last_extraction
-    # if last_extraction:
-    #     curso = curso.filter(provenance_statement__last_extraction__gte=last_extraction)
-
-    for x in curso:
-        print(x.curso_cnaef)
+    if last_extraction:
+        curso = curso.filter(provenance_statement__last_extraction__gte=last_extraction)
 
     for x in curso:
         # trabalho
@@ -140,7 +133,7 @@ def processa_ontologia():
 
         # curso
         g.add((myOntology['name'], OWL.NamedIndividual, Literal(x.curso_cnaef.nome)))
-        g.add((myOntology['name'], OWL.NamedIndividual, Literal(x.curso_cnaef.college_or_university.nome)))
+        g.add((myOntology['name'], OWL.NamedIndividual, Literal(x.curso_cnaef.college_or_university.nomedoestabelecimento)))
         g.add((myOntology['description'], OWL.NamedIndividual, Literal(x.descricao)))
         g.add((myOntology['educationalProgramMode'], OWL.NamedIndividual, Literal(x.modo)))
         g.add((myOntology['url'], OWL.NamedIndividual, Literal(x.url)))
@@ -166,10 +159,10 @@ def processa_ontologia():
         g.add((myOntology['addressRegion'], OWL.NamedIndividual, Literal(x.curso_cnaef.college_or_university.distrito)))
         g.add((myOntology['postalCode'], OWL.NamedIndividual, Literal(x.curso_cnaef.college_or_university.codigopostal)))
 
-    # # cursos = list(gc.triples((myOntology['name'], OWL.NamedIndividual, None)))
-    # # for (sub, pred, obj) in cursos:
-    # #     print((sub, pred, obj))
-    # 
+    # cursos = list(g.triples((myOntology['name'], OWL.NamedIndividual, None)))
+    # for (sub, pred, obj) in cursos:
+    #     print((sub, pred, obj))
+
     return g
 
 def populate_child(request, id):
@@ -211,16 +204,18 @@ def populate_child(request, id):
                     for defaults in (res.json()['d']):
                         partition_key = defaults['PartitionKey']
                         row_key = defaults['RowKey']
+                        timestamp = (defaults['Timestamp'].split('T')[0] + ' ' + defaults['Timestamp'].split('T')[1].split('.')[0])
+                        modified = datetime.strptime(timestamp, '%Y-%m-%d %H:%M:%S')
                         defaults.pop('PartitionKey')
                         defaults.pop('RowKey')
-                        defaults['Timestamp'] = (defaults['Timestamp'].split('T')[0] + ' ' + defaults['Timestamp'].split('T')[1].split('.')[0])
-                        modified = datetime.strptime(defaults['Timestamp'], '%Y-%m-%d %H:%M:%S')
+                        defaults.pop('Timestamp')
                         codigodoestabelecimento = '{:0>4}'.format(defaults['codigodoestabelecimento'])
                         defaults.pop('codigodoestabelecimento')
                         populated, c = CollegeOrUniversity.objects.update_or_create(
-                            PartitionKey = partition_key,
-                            RowKey = row_key,
+                            partitionkey = partition_key,
+                            rowkey = row_key,
                             provenance_statement = provenance_statement,
+                            timestamp = timestamp,
                             codigodoestabelecimento = codigodoestabelecimento,
                             defaults = defaults
                         )
@@ -232,17 +227,21 @@ def populate_child(request, id):
                     for defaults in (res.json()['d']):
                         partition_key = defaults['PartitionKey']
                         row_key = defaults['RowKey']
+                        timestamp = (defaults['Timestamp'].split('T')[0] + ' ' + defaults['Timestamp'].split('T')[1].split('.')[0])
+                        modified = datetime.strptime(timestamp, '%Y-%m-%d %H:%M:%S')
                         defaults.pop('PartitionKey')
                         defaults.pop('RowKey')
-                        defaults['Timestamp'] = (defaults['Timestamp'].split('T')[0] + ' ' + defaults['Timestamp'].split('T')[1].split('.')[0])
-                        modified = datetime.strptime(defaults['Timestamp'], '%Y-%m-%d %H:%M:%S')
+                        defaults.pop('Timestamp')
                         defaults['estabelecimento'] = defaults['estabelecimento'].split(' - ')[0]
+                        college_or_university = CollegeOrUniversity.objects.get(codigodoestabelecimento=defaults['estabelecimento'])
                         defaults['nome'] = defaults['curso']
                         defaults.pop('curso')
                         populated, c = CursoCnaef.objects.update_or_create(
-                            PartitionKey = partition_key,
-                            RowKey = row_key,
+                            partitionkey = partition_key,
+                            rowkey = row_key,
                             provenance_statement = provenance_statement,
+                            timestamp = timestamp,
+                            college_or_university = college_or_university,
                             defaults = defaults
                         )
                 else:

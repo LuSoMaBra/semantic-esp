@@ -6,7 +6,7 @@ class UTADSpider(scrapy.Spider):
     name = "UTAD_spider"
     start_urls = ['https://www.utad.pt/estudar/inicio/licenciaturas-mestrados-integrados/', 'https://www.utad.pt/estudar/inicio/licenciaturas-mestrados-integrados/page/2/']
     mask_university = '12'  # important - colocado manualmente após a importação dos dados abertos do governo (primeiros 2 dígitos do código da instituição)
-    provenance_statement_id = 9 # important - definido quando da programação do código da UTAD
+    provenance_statement_id = 3 # important - definido quando da programação do código da UTAD
     valor_propina_nacional = 697
     valor_propina_internacional = 1500
     data_raspagem = datetime.datetime.now()

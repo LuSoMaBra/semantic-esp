@@ -15,13 +15,12 @@
                                 <div class="form-group">
                                     <label>Sentença SPARQL</label>
                                     <textarea class="form-control form-control-sm bs-tooltip" name="sparql_text" data-toggle="tooltip" data-placement="right" data-original-title="Digite aqui uma sentença SPARQL compatível com a ontologia" required maxlength="256" size="256" rows="2">{{ sparql_query }}</textarea>
-                                    <small class="form-text text-muted">Ex.: 'SELECT ?label ?NamedIndividual WHERE { ?AreaCurso rdfs:label ?label }'</small>
-                                    <input hidden value="curso" id="run_on" name="run_on">
+                                    <small class="form-text text-muted">Ex.: SELECT ?x ?label WHERE { ?x owl:NamedIndividual ?label }</small>
+<!--                                    <small class="form-text text-muted">Ex.: 'SELECT ?label ?NamedIndividual WHERE { ?cursocnaef rdfs:label ?label }'</small>-->
                                 </div>
                             </div>
                             <div class="widget-one col-5 mt-5 text-right">
-                                <button onclick="set_run_on('curso')" form="run_sparql_ontologia" type="submit" class="btn btn-outline-primary btn-formato xml ml-2 mr-4">Executa na Ontologia Cursos</button>
-                                <button onclick="set_run_on('job')" form="run_sparql_ontologia" type="submit" class="btn btn-outline-primary btn-formato xml ml-2 mr-4">Executa na Ontologia Trabalho</button>
+                                <button form="run_sparql_ontologia" type="submit" class="btn btn-outline-primary btn-formato xml ml-2 mr-4">Executa</button>
                             </div>
                         </div>
                     </div>
@@ -58,13 +57,6 @@
 
 {% block script %}
     <script type="text/javascript">
-        function set_run_on(text) {
-            if ( text == 'curso' ) {
-                $('#run_on').val('curso')
-            } else {
-                $('#run_on').val('job')
-            };
-        };
     </script>
 {% endblock %}
 
