@@ -11,12 +11,16 @@
                 <div class="col-xl-12 col-12 layout-spacing">
                     <div class="widget-content-area row ">
                         <div class="widget-one col text-center mt-3">
-                            <h4 class="mb-4">Ontologia OP:</h4>
+                            <h4 class="mb-4">Visualiza Ontologia OP Serializada:</h4>
                             <button class="btn btn-outline-primary btn-formato turtle ml-2 mr-2">Turtle</button>
                             <button class="btn btn-outline-primary btn-formato nt ml-2 mr-2">NT</button>
                             <button class="btn btn-outline-primary btn-formato prettyxml ml-2 mr-2">PrettyXML</button>
                             <button class="btn btn-outline-primary btn-formato trig ml-2 mr-2">Trig</button>
                             <button class="btn btn-outline-primary btn-formato xml ml-2 mr-2">XML</button>
+                        </div>
+                        <div class="widget-one col text-center mt-3">
+                            <h4 class="mb-4">Link de acesso direto:</h4>
+                            <input id="link_direct" readonly class="form-control form-control-sm ml-2 mr-2" value="http://127.0.0.1:8000/serializa_ontologia/turtle"></input>
                         </div>
                     </div>
                 </div>
@@ -61,22 +65,27 @@
             if ( $(this).hasClass('nt') ) {
                 $('#textTitle').text('Formato NT')
                 $('#resultTextarea').val('{{ ontologia_serializada.nt|escapejs }}')
+                $('#link_direct').val('http://127.0.0.1:8000/serializa_ontologia/nt')
             };
             if ( $(this).hasClass('prettyxml') ) {
                 $('#textTitle').text('Formato PrettyXML')
                 $('#resultTextarea').val('{{ ontologia_serializada.prettyxml|escapejs }}')
+                $('#link_direct').val('http://127.0.0.1:8000/serializa_ontologia/prettyxml')
             };
             if ( $(this).hasClass('trig') ) {
                 $('#textTitle').text('Formato Trig')
                 $('#resultTextarea').val('{{ ontologia_serializada.trig|escapejs }}')
+                $('#link_direct').val('http://127.0.0.1:8000/serializa_ontologia/trig')
             };
             if ( $(this).hasClass('turtle') ) {
                 $('#textTitle').text('Formato Turtle')
                 $('#resultTextarea').val('{{ ontologia_serializada.turtle|escapejs }}')
+                $('#link_direct').val('http://127.0.0.1:8000/serializa_ontologia/turtle')
             };
             if ( $(this).hasClass('xml') ) {
                 $('#textTitle').text('Formato XML')
                 $('#resultTextarea').val('{{ ontologia_serializada.xml|escapejs }}')
+                $('#link_direct').val('http://127.0.0.1:8000/serializa_ontologia/xml')
             };
         });
     </script>
