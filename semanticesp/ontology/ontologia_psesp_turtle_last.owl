@@ -1,0 +1,276 @@
+@prefix : <https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontologia_psesp#> .
+@prefix dbo: <http://dbpedia.org/ontology/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix psesp: <https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_psesp.owl#> .
+@prefix schema: <http://schema.org/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix ontologia_psesp: <https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontologia_psesp#> .
+@base <https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontologia_psesp> .
+<https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontologia_psesp> rdf:type owl:Ontology .
+#################################################################
+#    Datatypes
+#################################################################
+###  http://purl.org/dc/terms/creator
+dcterms:creator rdf:type rdfs:Datatype .
+###  http://schema.org/addressLocality
+schema:addressLocality rdf:type rdfs:Datatype .
+###  http://schema.org/branchCode
+schema:branchCode rdf:type rdfs:Datatype .
+###  http://schema.org/description
+schema:description rdf:type rdfs:Datatype .
+###  http://schema.org/jobTitle
+schema:jobTitle rdf:type rdfs:Datatype .
+###  http://schema.org/name
+schema:name rdf:type rdfs:Datatype .
+###  http://schema.org/title
+schema:title rdf:type rdfs:Datatype .
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_psesp.owl#AreaCurso
+psesp:AreaCurso rdf:type rdfs:Datatype .
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_psesp.owl#DuracaoCurso
+psesp:DuracaoCurso rdf:type rdfs:Datatype .
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_psesp.owl#ModoTrabalho
+psesp:ModoTrabalho rdf:type rdfs:Datatype .
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_psesp.owl#RemuneracaoTrabalho
+psesp:RemuneracaoTrabalho rdf:type rdfs:Datatype .
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_psesp.owl#ValorPropinaInternacional
+psesp:ValorPropinaInternacional rdf:type rdfs:Datatype .
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_psesp.owl#source
+psesp:source rdf:type rdfs:Datatype .
+#################################################################
+#    Object Properties
+#################################################################
+###  http://purl.org/dc/terms/created
+dcterms:created rdf:type owl:ObjectProperty ;
+                rdfs:domain dcterms:ProvenanceStatement ;
+                rdfs:range xsd:datetime .
+###  http://purl.org/dc/terms/hasPart
+dcterms:hasPart rdf:type owl:ObjectProperty ;
+                rdfs:domain dcterms:ProvenanceStatement ;
+                rdfs:range schema:CollegeOrUniversity ,
+                           schema:Course ,
+                           psesp:Trabalho ;
+                rdfs:label "tem parte de"@pt .
+###  http://purl.org/dc/terms/isPartOf
+dcterms:isPartOf rdf:type owl:ObjectProperty ;
+                 rdfs:domain schema:CollegeOrUniversity ;
+                 rdfs:range schema:Course ;
+                 rdfs:label "é parte de"@pt .
+###  http://purl.org/dc/terms/modified
+dcterms:modified rdf:type owl:ObjectProperty ;
+                 rdfs:domain dcterms:ProvenanceStatement ;
+                 rdfs:range xsd:datetime .
+###  http://schema.org/sameAs
+schema:sameAs rdf:type owl:ObjectProperty ;
+              rdfs:domain psesp:RequisitosTrabalho .
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_psesp.owl#isPropertyOff
+psesp:isPropertyOff rdf:type owl:ObjectProperty ;
+                    rdfs:domain dcterms:ProvenanceStatement ,
+                                schema:CollegeOrUniversity ,
+                                schema:Course ,
+                                psesp:Trabalho ;
+                    rdfs:range dcterms:created ,
+                               dcterms:modified ,
+                               schema:addressRegion ,
+                               schema:courseMode ,
+                               schema:postalCode ,
+                               schema:streetAddress ,
+                               schema:url ,
+                               psesp:AreaCNAEF ,
+                               psesp:NivelDeFormacao ,
+                               psesp:ValorPropinaNacional ,
+                               psesp:lastExtraction .
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_psesp.owl#lastExtraction
+psesp:lastExtraction rdf:type owl:ObjectProperty ;
+                     rdfs:domain dcterms:ProvenanceStatement ;
+                     rdfs:range xsd:datetime .
+#################################################################
+#    Data properties
+#################################################################
+###  http://purl.org/dc/terms/created
+dcterms:created rdf:type owl:DatatypeProperty .
+###  http://purl.org/dc/terms/creator
+dcterms:creator rdf:type owl:DatatypeProperty ;
+                rdfs:domain dcterms:ProvenanceStatement ;
+                rdfs:range xsd:string .
+###  http://purl.org/dc/terms/modified
+dcterms:modified rdf:type owl:DatatypeProperty .
+###  http://schema.org/addressLocality
+schema:addressLocality rdf:type owl:DatatypeProperty ;
+                       rdfs:domain schema:PostalAddress ;
+                       rdfs:range xsd:string .
+###  http://schema.org/addressRegion
+schema:addressRegion rdf:type owl:DatatypeProperty ;
+                     rdfs:domain schema:CollegeOrUniversity ;
+                     rdfs:range xsd:string .
+###  http://schema.org/branchCode
+schema:branchCode rdf:type owl:DatatypeProperty ;
+                  rdfs:domain schema:CollegeOrUniversity ;
+                  rdfs:range xsd:string .
+###  http://schema.org/courseMode
+schema:courseMode rdf:type owl:DatatypeProperty ;
+                  rdfs:domain schema:Course ;
+                  rdfs:range xsd:string .
+###  http://schema.org/description
+schema:description rdf:type owl:DatatypeProperty ;
+                   rdfs:domain schema:Course ,
+                               psesp:Trabalho ;
+                   rdfs:range xsd:string .
+###  http://schema.org/jobTitle
+schema:jobTitle rdf:type owl:DatatypeProperty ;
+                rdfs:domain psesp:Trabalho ;
+                rdfs:range xsd:string .
+###  http://schema.org/name
+schema:name rdf:type owl:DatatypeProperty ;
+            rdfs:domain schema:CollegeOrUniversity ,
+                        schema:Course ;
+            rdfs:range xsd:string .
+###  http://schema.org/postalCode
+schema:postalCode rdf:type owl:DatatypeProperty ;
+                  rdfs:domain schema:CollegeOrUniversity ;
+                  rdfs:range xsd:string .
+###  http://schema.org/sameAs
+schema:sameAs rdf:type owl:DatatypeProperty ;
+              rdfs:range psesp:AreaCurso .
+###  http://schema.org/streetAddress
+schema:streetAddress rdf:type owl:DatatypeProperty ;
+                     rdfs:domain schema:CollegeOrUniversity ;
+                     rdfs:range xsd:string .
+###  http://schema.org/title
+schema:title rdf:type owl:DatatypeProperty ;
+             rdfs:domain dcterms:ProvenanceStatement ;
+             rdfs:range xsd:string .
+###  http://schema.org/url
+schema:url rdf:type owl:DatatypeProperty ;
+           rdfs:domain dcterms:ProvenanceStatement ,
+                       schema:CollegeOrUniversity ,
+                       schema:Course ;
+           rdfs:range xsd:string .
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_psesp.owl#AreaCNAEF
+psesp:AreaCNAEF rdf:type owl:DatatypeProperty ;
+                rdfs:domain schema:Course ;
+                rdfs:range xsd:string .
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_psesp.owl#AreaCurso
+psesp:AreaCurso rdf:type owl:DatatypeProperty ;
+                rdfs:domain schema:Course ;
+                rdfs:range xsd:string .
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_psesp.owl#DuracaoCurso
+psesp:DuracaoCurso rdf:type owl:DatatypeProperty ;
+                   rdfs:domain schema:Course ;
+                   rdfs:range xsd:string .
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_psesp.owl#ModoTrabalho
+psesp:ModoTrabalho rdf:type owl:DatatypeProperty ;
+                   rdfs:domain psesp:Trabalho ;
+                   rdfs:range xsd:string .
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_psesp.owl#NivelDeFormacao
+psesp:NivelDeFormacao rdf:type owl:DatatypeProperty ;
+                      rdfs:domain schema:Course ;
+                      rdfs:range xsd:string .
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_psesp.owl#RemuneracaoTrabalho
+psesp:RemuneracaoTrabalho rdf:type owl:DatatypeProperty ;
+                          rdfs:domain psesp:Trabalho ;
+                          rdfs:range xsd:string .
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_psesp.owl#RequisitosTrabalho
+psesp:RequisitosTrabalho rdf:type owl:DatatypeProperty ;
+                         rdfs:domain psesp:Trabalho ;
+                         rdfs:range xsd:string .
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_psesp.owl#ValorPropinaInternacional
+psesp:ValorPropinaInternacional rdf:type owl:DatatypeProperty ;
+                                rdfs:domain schema:CollegeOrUniversity ;
+                                rdfs:range xsd:string .
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_psesp.owl#ValorPropinaNacional
+psesp:ValorPropinaNacional rdf:type owl:DatatypeProperty ;
+                           rdfs:domain schema:CollegeOrUniversity ;
+                           rdfs:range xsd:string .
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_psesp.owl#isPropertyOff
+psesp:isPropertyOff rdf:type owl:DatatypeProperty ;
+                    rdfs:range dcterms:creator ,
+                               schema:addressLocality ,
+                               schema:branchCode ,
+                               schema:description ,
+                               schema:jobTitle ,
+                               schema:name ,
+                               schema:title ,
+                               psesp:AreaCurso ,
+                               psesp:DuracaoCurso ,
+                               psesp:ModoTrabalho ,
+                               psesp:RemuneracaoTrabalho ,
+                               psesp:RequisitosTrabalho ,
+                               psesp:ValorPropinaInternacional ,
+                               psesp:source .
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_psesp.owl#lastExtraction
+psesp:lastExtraction rdf:type owl:DatatypeProperty .
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_psesp.owl#source
+psesp:source rdf:type owl:DatatypeProperty ;
+             rdfs:domain dcterms:ProvenanceStatement ;
+             rdfs:range xsd:string .
+#################################################################
+#    Classes
+#################################################################
+###  http://purl.org/dc/terms/ProvenanceStatement
+dcterms:ProvenanceStatement rdf:type owl:Class ;
+                            rdfs:label "Provedor da Informação"@pt .
+###  http://schema.org/CollegeOrUniversity
+schema:CollegeOrUniversity rdf:type owl:Class ;
+                           rdfs:label "Instituição de Curso Superior"@pt .
+###  http://schema.org/Course
+schema:Course rdf:type owl:Class ;
+              rdfs:label "Curso Superior"@pt .
+###  http://schema.org/PostalAddress
+schema:PostalAddress rdf:type owl:Class .
+###  http://schema.org/addressRegion
+schema:addressRegion rdf:type owl:Class .
+###  http://schema.org/courseMode
+schema:courseMode rdf:type owl:Class .
+###  http://schema.org/postalCode
+schema:postalCode rdf:type owl:Class .
+###  http://schema.org/streetAddress
+schema:streetAddress rdf:type owl:Class .
+###  http://schema.org/url
+schema:url rdf:type owl:Class .
+###  http://www.w3.org/2001/XMLSchema#datetime
+xsd:datetime rdf:type owl:Class .
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_psesp.owl#AreaCNAEF
+psesp:AreaCNAEF rdf:type owl:Class .
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_psesp.owl#NivelDeFormacao
+psesp:NivelDeFormacao rdf:type owl:Class .
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_psesp.owl#Trabalho
+psesp:Trabalho rdf:type owl:Class ;
+               rdfs:label "Oferta de Trabalho"@pt .
+###  https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_psesp.owl#ValorPropinaNacional
+psesp:ValorPropinaNacional rdf:type owl:Class .
+#################################################################
+#    Annotations
+#################################################################
+dcterms:created rdfs:label "Data e hora da criação da informação"@pt .
+dcterms:creator rdfs:label "Nome do criador da informação"@pt .
+dcterms:modified rdfs:label "Data e hora da última modificação da informação"@pt .
+schema:addressLocality rdfs:label "Concelho"@pt .
+schema:addressRegion rdfs:label "Distrito"@pt .
+schema:branchCode rdfs:label "Código da Universidade ou Instituto de ensino superior"@pt .
+schema:courseMode rdfs:label "Modo curso (Presencial/Remoto)"@pt .
+schema:description rdfs:label "Descrição"@pt .
+schema:jobTitle rdfs:label "Título da oferta de emprego"@pt .
+schema:name rdfs:label "Área profissional do curso"@pt ,
+                       "Nome da Universidade ou Instituto de ensino superior"@pt .
+schema:postalCode rdfs:label "Código postal"@pt .
+schema:sameAs rdfs:label "é igual a"@pt .
+schema:streetAddress rdfs:label "Morada"@pt .
+schema:title rdfs:label "Nome do provedor da informação"@pt .
+schema:url rdfs:label "URL de origem da informação"@pt .
+psesp:AreaCNAEF rdfs:label "Área profissional do curso"@pt .
+psesp:AreaCurso rdfs:label "Área de estudo do curso"@pt .
+psesp:DuracaoCurso rdfs:label "Duração do curso (anos)"@pt .
+psesp:ModoTrabalho rdfs:label "Modo de trabalho (remoto/presencial/ambos)"@pt .
+psesp:NivelDeFormacao rdfs:label "Qualificação do curso"@pt .
+psesp:RemuneracaoTrabalho rdfs:label "Remuneração oferecidade pela oferta de emprego"@pt .
+psesp:RequisitosTrabalho rdfs:label "Requisitos académicos para ocupar a vaga de emprego (Área do Curso)"@pt .
+psesp:ValorPropinaInternacional rdfs:label "Valor da propina para alunos internacionais"@pt .
+psesp:ValorPropinaNacional rdfs:label "Valor da propina para alunos nacionais"@pt .
+psesp:isPropertyOff rdfs:label "é propriedade de"@pt .
+psesp:lastExtraction rdfs:label "Data e hora da extração da informação"@pt .
+psesp:source rdfs:label "Formato da informação"@pt .
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
