@@ -1,0 +1,156 @@
+
+@prefix : <https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_psesp.owl#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix dbo: <http://dbpedia.org/ontology/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix schema: <http://schema.org/> .
+@prefix psesp: <https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_psesp.owl#> .
+
+<https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontologia_psesp> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+schema:provider a rdf:Property, owl:ObjectProperty ;
+	rdfs:domain schema:EducationalOcuppationalProgram ;
+	rdfs:range schema:CollegeOrUniversity .
+
+schema:educationRequirements a rdf:Property, owl:ObjectProperty ;
+	rdfs:domain schema:JobPosting ;
+	rdfs:range schema:EducationalOcuppationalProgram  .
+
+schema:provider a rdf:Property, owl:ObjectProperty ;
+	rdfs:domain schema:CollegeOrUniversity ,
+	           schema:EducationalOcuppationalProgram ,
+	           schema:JobPosting ;
+	rdfs:range dcterms:ProvenanceStatement .
+
+schema:address a rdf:Property, owl:ObjectProperty ;
+	rdfs:domain schema:CollegeOrUniversity ;
+	rdfs:range schema:PostalAddress  .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+schema:name a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain schema:EducationalOcuppationalProgram,
+	            schema:CollegeOrUniversity ;
+	rdfs:range xsd:string .
+
+schema:description a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain schema:EducationalOcuppationalProgram,
+	            schema:JobPosting ;
+	rdfs:range xsd:string .
+
+schema:educationalProgramMode a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain schema:EducationalOcuppationalProgram ;
+	rdfs:range xsd:string .
+
+schema:title a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain schema:JobPosting ,
+	           dcterms:ProvenanceStatement ;
+	rdfs:range xsd:string .
+
+schema:branchCode a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain schema:CollegeOrUniversity ;
+	rdfs:range xsd:string .
+
+schema:url a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain schema:CollegeOrUniversity ,
+	            schema:EducationalOcuppationalProgram ,
+              dcterms:ProvenanceStatement ;
+	rdfs:range xsd:string .
+
+schema:streetAddress a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain schema:PostalAddress ;
+	rdfs:range xsd:string .
+
+schema:addressLocality a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain schema:PostalAddress ;
+	rdfs:range xsd:string .
+
+schema:addressRegion a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain schema:PostalAddress ;
+	rdfs:range xsd:string .
+
+schema:postalCode a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain schema:PostalAddress ;
+	rdfs:range xsd:string .
+
+dcterms:creator a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain dcterms:ProvenanceStatement ;
+	rdfs:range xsd:string .
+
+dcterms:created a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain dcterms:ProvenanceStatement ;
+	rdfs:range xsd:datetime .
+
+dcterms:modified a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain dcterms:ProvenanceStatement ;
+	rdfs:range xsd:datetime .
+
+psesp:cnaefArea a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain schema:EducationalOcuppationalProgram ;
+	rdfs:range xsd:string .
+
+psesp:programmeArea a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain schema:EducationalOcuppationalProgram ;
+	rdfs:range xsd:string .
+
+schema:termDuration a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain schema:EducationalOcuppationalProgram ;
+	rdfs:range xsd:string .
+
+schema:educationalCredentialAwarded a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain schema:EducationalOcuppationalProgram ;
+	rdfs:range xsd:string .
+
+psesp:internationalRegistrationFee a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain schema:CollegeOrUniversity ;
+	rdfs:range xsd:string .
+
+psesp:nationalRegistrationFee a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain schema:CollegeOrUniversity ;
+	rdfs:range xsd:string .
+
+schema:qualifications a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain schema:JobPosting ;
+	rdfs:range xsd:string .
+
+schema:baseSalary a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain schema:JobPosting ;
+	rdfs:range xsd:string .
+
+schema:employmentType a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain schema:JobPosting ;
+	rdfs:range xsd:string .
+
+psesp:lastExtraction a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain dcterms:ProvenanceStatement ;
+	rdfs:range xsd:datetime .
+
+schema:fileFormat a rdf:Property, owl:DatatypeProperty ;
+	rdfs:domain dcterms:ProvenanceStatement ;
+	rdfs:range xsd:string .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+schema:EducationalOcuppationalProgram rdf:type owl:Class .
+
+schema:CollegeOrUniversity rdf:type owl:Class .
+
+dcterms:ProvenanceStatement rdf:type owl:Class .
+
+schema:JobPosting rdf:type owl:Class .
+
+schema:PostalAddress rdf:type owl:Class .
