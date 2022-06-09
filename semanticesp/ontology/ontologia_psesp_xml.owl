@@ -1,0 +1,371 @@
+<?xml version="1.0"?>
+<Ontology xmlns="http://www.w3.org/2002/07/owl#"
+     xml:base="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontologia_psesp"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     ontologyIRI="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontologia_psesp">
+    <Prefix name="" IRI="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontologia_psesp#"/>
+    <Prefix name="dbo" IRI="http://dbpedia.org/ontology/"/>
+    <Prefix name="owl" IRI="http://www.w3.org/2002/07/owl#"/>
+    <Prefix name="rdf" IRI="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+    <Prefix name="xml" IRI="http://www.w3.org/XML/1998/namespace"/>
+    <Prefix name="xsd" IRI="http://www.w3.org/2001/XMLSchema#"/>
+    <Prefix name="rdfs" IRI="http://www.w3.org/2000/01/rdf-schema#"/>
+    <Prefix name="psesp" IRI="https://github.com/LuSoMaBra/semantic-esp/tree/master/semanticesp/ontology/ontologia_psesp.owl#"/>
+    <Prefix name="schema" IRI="http://schema.org/"/>
+    <Prefix name="dcterms" IRI="http://purl.org/dc/terms/"/>
+    <Declaration>
+        <Class abbreviatedIRI="dcterms:ProvenanceStatement"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="schema:CollegeOrUniversity"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="schema:EducationalOcuppationalProgram"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="schema:JobPosting"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="schema:PostalAddress"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="schema:address"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="schema:educationRequirements"/>
+    </Declaration>
+    <Declaration>
+        <ObjectProperty abbreviatedIRI="schema:provider"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="dcterms:created"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="dcterms:creator"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="dcterms:modified"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="schema:addressLocality"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="schema:addressRegion"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="schema:baseSalary"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="schema:branchCode"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="schema:description"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="schema:educationalCredentialAwarded"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="schema:educationalProgramMode"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="schema:employmentType"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="schema:fileFormat"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="schema:name"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="schema:postalCode"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="schema:qualifications"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="schema:streetAddress"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="schema:termDuration"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="schema:title"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="schema:url"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="psesp:cnaefArea"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="psesp:internationalRegistrationFee"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="psesp:lastExtraction"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="psesp:nationalRegistrationFee"/>
+    </Declaration>
+    <Declaration>
+        <DataProperty abbreviatedIRI="psesp:programmeArea"/>
+    </Declaration>
+    <Declaration>
+        <Class abbreviatedIRI="xsd:datetime"/>
+    </Declaration>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI="dcterms:created"/>
+        <Class abbreviatedIRI="dcterms:ProvenanceStatement"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI="dcterms:modified"/>
+        <Class abbreviatedIRI="dcterms:ProvenanceStatement"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI="schema:address"/>
+        <Class abbreviatedIRI="schema:CollegeOrUniversity"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI="schema:educationRequirements"/>
+        <Class abbreviatedIRI="schema:JobPosting"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI="schema:provider"/>
+        <Class abbreviatedIRI="schema:CollegeOrUniversity"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI="schema:provider"/>
+        <Class abbreviatedIRI="schema:EducationalOcuppationalProgram"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI="schema:provider"/>
+        <Class abbreviatedIRI="schema:JobPosting"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyDomain>
+        <ObjectProperty abbreviatedIRI="psesp:lastExtraction"/>
+        <Class abbreviatedIRI="dcterms:ProvenanceStatement"/>
+    </ObjectPropertyDomain>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="dcterms:created"/>
+        <Class abbreviatedIRI="xsd:datetime"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="dcterms:modified"/>
+        <Class abbreviatedIRI="xsd:datetime"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="schema:address"/>
+        <Class abbreviatedIRI="schema:PostalAddress"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="schema:educationRequirements"/>
+        <Class abbreviatedIRI="schema:EducationalOcuppationalProgram"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="schema:provider"/>
+        <Class abbreviatedIRI="dcterms:ProvenanceStatement"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="schema:provider"/>
+        <Class abbreviatedIRI="schema:CollegeOrUniversity"/>
+    </ObjectPropertyRange>
+    <ObjectPropertyRange>
+        <ObjectProperty abbreviatedIRI="psesp:lastExtraction"/>
+        <Class abbreviatedIRI="xsd:datetime"/>
+    </ObjectPropertyRange>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="dcterms:creator"/>
+        <Class abbreviatedIRI="dcterms:ProvenanceStatement"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="schema:addressLocality"/>
+        <Class abbreviatedIRI="schema:PostalAddress"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="schema:addressRegion"/>
+        <Class abbreviatedIRI="schema:PostalAddress"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="schema:baseSalary"/>
+        <Class abbreviatedIRI="schema:JobPosting"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="schema:branchCode"/>
+        <Class abbreviatedIRI="schema:CollegeOrUniversity"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="schema:description"/>
+        <Class abbreviatedIRI="schema:EducationalOcuppationalProgram"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="schema:description"/>
+        <Class abbreviatedIRI="schema:JobPosting"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="schema:educationalCredentialAwarded"/>
+        <Class abbreviatedIRI="schema:EducationalOcuppationalProgram"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="schema:educationalProgramMode"/>
+        <Class abbreviatedIRI="schema:EducationalOcuppationalProgram"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="schema:employmentType"/>
+        <Class abbreviatedIRI="schema:JobPosting"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="schema:fileFormat"/>
+        <Class abbreviatedIRI="dcterms:ProvenanceStatement"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="schema:name"/>
+        <Class abbreviatedIRI="schema:CollegeOrUniversity"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="schema:name"/>
+        <Class abbreviatedIRI="schema:EducationalOcuppationalProgram"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="schema:postalCode"/>
+        <Class abbreviatedIRI="schema:PostalAddress"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="schema:qualifications"/>
+        <Class abbreviatedIRI="schema:JobPosting"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="schema:streetAddress"/>
+        <Class abbreviatedIRI="schema:PostalAddress"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="schema:termDuration"/>
+        <Class abbreviatedIRI="schema:EducationalOcuppationalProgram"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="schema:title"/>
+        <Class abbreviatedIRI="dcterms:ProvenanceStatement"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="schema:title"/>
+        <Class abbreviatedIRI="schema:JobPosting"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="schema:url"/>
+        <Class abbreviatedIRI="dcterms:ProvenanceStatement"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="schema:url"/>
+        <Class abbreviatedIRI="schema:CollegeOrUniversity"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="schema:url"/>
+        <Class abbreviatedIRI="schema:EducationalOcuppationalProgram"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="psesp:cnaefArea"/>
+        <Class abbreviatedIRI="schema:EducationalOcuppationalProgram"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="psesp:internationalRegistrationFee"/>
+        <Class abbreviatedIRI="schema:CollegeOrUniversity"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="psesp:nationalRegistrationFee"/>
+        <Class abbreviatedIRI="schema:CollegeOrUniversity"/>
+    </DataPropertyDomain>
+    <DataPropertyDomain>
+        <DataProperty abbreviatedIRI="psesp:programmeArea"/>
+        <Class abbreviatedIRI="schema:EducationalOcuppationalProgram"/>
+    </DataPropertyDomain>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="dcterms:creator"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="schema:addressLocality"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="schema:addressRegion"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="schema:baseSalary"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="schema:branchCode"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="schema:description"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="schema:educationalCredentialAwarded"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="schema:educationalProgramMode"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="schema:employmentType"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="schema:fileFormat"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="schema:name"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="schema:postalCode"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="schema:qualifications"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="schema:streetAddress"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="schema:termDuration"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="schema:title"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="schema:url"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="psesp:cnaefArea"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="psesp:internationalRegistrationFee"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="psesp:nationalRegistrationFee"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+    <DataPropertyRange>
+        <DataProperty abbreviatedIRI="psesp:programmeArea"/>
+        <Datatype abbreviatedIRI="xsd:string"/>
+    </DataPropertyRange>
+</Ontology>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+
