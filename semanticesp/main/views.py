@@ -94,12 +94,13 @@ def run_sparql_ontologia(request):
         if not sparql_resultado:
             sparql_resultado = ['Ocorreu um erro ao executar a query. \n\nSem resultados para mostrar.']
             messages.error(request, 'Ocorreu um erro ao executar a query. Operação não efetuada.')
+        else:
+            messages.success(request, 'Query executada com sucesso.')
 
         context = {
             'sparql_query': sparql_query,
             'sparql_resultado': sparql_resultado,
         }
-        messages.success(request, 'Query executada com sucesso.')
 
     except Exception as error:
         messages.error(request, 'Ocorreu um erro ao executar a query. Operação não efetuada.')
